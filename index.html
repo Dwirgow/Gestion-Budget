@@ -49,23 +49,6 @@
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 antialiased font-sans pb-12">
 
-    <div id="login-screen" class="fixed inset-0 bg-slate-900 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl border border-slate-100">
-            <div class="text-center mb-6">
-                <div class="bg-indigo-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-md">
-                    <i class="fa-solid fa-lock text-xl"></i>
-                </div>
-                <h2 class="text-lg font-bold text-slate-800">Budget Familial Synchro</h2>
-                <p class="text-xs text-slate-400 mt-1">Connectez-vous pour synchroniser vos données</p>
-            </div>
-            <div class="space-y-3">
-                <input type="email" id="login-email" placeholder="Adresse email" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                <input type="password" id="login-password" placeholder="Mot de passe" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                <button onclick="login()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm py-3 rounded-xl transition shadow-sm">Se connecter</button>
-            </div>
-        </div>
-    </div>
-
     <div class="max-w-4xl mx-auto px-4 pt-6">
         <header class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -79,9 +62,6 @@
             </div>
             
             <div class="flex flex-wrap gap-2 text-xs">
-                <button onclick="logout()" class="bg-slate-100 hover:bg-rose-100 hover:text-rose-700 text-slate-700 px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5 ml-auto">
-                    <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
-                </button>
                 <button onclick="resetMonthExpenses()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5" title="Remet à zéro les dépenses et décoche les charges">
                     <i class="fa-solid fa-calendar-minus"></i> Nouveau Mois (RAZ)
                 </button>
@@ -289,46 +269,23 @@
 
         let db = initialDefaultData;
 
-        // AUTHENTICATION ET ÉCOUTE DU CLOUD
-        function login() {
-            const email = document.getElementById('login-email').value.trim();
-            const pass = document.getElementById('login-password').value;
-            if(!email || !pass) return showToast("Veuillez remplir tous les champs", true);
-            
-            firebase.auth().signInWithEmailAndPassword(email, pass)
-                .catch(err => showToast("Erreur : " + err.message, true));
-        }
+        // Connexion directe à votre salon privé Cloud
+        // 💡 Astuce : Changez 'notre_budget_secret_123' par un mot ou chiffre unique à vous pour que personne ne le devine.
+        dbRef = firebase.database().ref('budgets/notre_budget_secret_123');
 
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.reload();
-            });
-        }
-
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('login-screen').classList.add('hidden');
-                // On cible un noeud propre à l'utilisateur dans la base Realtime
-                dbRef = firebase.database().ref('users/' + user.uid + '/budget');
-                
-                // ÉCOUTE DU CLOUD EN TEMPS RÉEL (Si le conjoint modifie, l'écran change tout seul !)
-                dbRef.on('value', (snapshot) => {
-                    const cloudData = snapshot.val();
-                    if (cloudData) {
-                        db = cloudData;
-                        // Sûreté pour les tableaux vides
-                        if (!db.revenus) db.revenus = [];
-                        if (!db.expenses) db.expenses = [];
-                        if (!db.envelopes) db.envelopes = [];
-                    } else {
-                        db = initialDefaultData;
-                        saveToLocalStorage(); // Initialise le cloud
-                    }
-                    renderAll();
-                });
+        // ÉCOUTE DU CLOUD EN TEMPS RÉEL (Synchro automatique)
+        dbRef.on('value', (snapshot) => {
+            const cloudData = snapshot.val();
+            if (cloudData) {
+                db = cloudData;
+                if (!db.revenus) db.revenus = [];
+                if (!db.expenses) db.expenses = [];
+                if (!db.envelopes) db.envelopes = [];
             } else {
-                document.getElementById('login-screen').classList.remove('hidden');
+                db = initialDefaultData;
+                saveToLocalStorage(); // Initialise la base si elle est vide
             }
+            renderAll();
         });
 
         // Fonction de sauvegarde modifiée pour pousser sur Firebase
