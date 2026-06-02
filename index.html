@@ -607,7 +607,13 @@
 
             const expList = document.getElementById('expenses-list');
             expList.innerHTML = '';
-            db.expenses.forEach(e => {
+            
+            // Tri des dépenses par couleur
+            const sortedExpenses = [...db.expenses].sort((a, b) => {
+                return COLORS.indexOf(a.color || '#64748b') - COLORS.indexOf(b.color || '#64748b');
+            });
+            
+            sortedExpenses.forEach(e => {
                 totalExpenses += e.amount;
                 const isPaid = e.paid === true;
                 const color = e.color || '#64748b';
@@ -633,7 +639,12 @@
             let currentPercent = 0;
             let gradientSegments = [];
 
-            db.envelopes.forEach(e => {
+            // Tri des enveloppes par couleur
+            const sortedEnvelopes = [...db.envelopes].sort((a, b) => {
+                return COLORS.indexOf(a.color || '#3b82f6') - COLORS.indexOf(b.color || '#3b82f6');
+            });
+
+            sortedEnvelopes.forEach(e => {
                 totalEnvelopesBudget += e.budget;
                 totalEnvelopesSpent += e.spent;
                 const rem = e.budget - e.spent;
@@ -673,7 +684,7 @@
             });
 
             if (totalEnvelopesBudget > 0) {
-                db.envelopes.forEach(e => {
+                sortedEnvelopes.forEach(e => {
                     const rem = Math.max(0, e.budget - e.spent);
                     const sliceSize = (rem / totalEnvelopesBudget) * 100;
                     if (sliceSize > 0) {
