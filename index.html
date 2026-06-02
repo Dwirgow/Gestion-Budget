@@ -86,16 +86,21 @@
         <div id="tab-revenus" class="tab-content active">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2 text-base"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter un revenu</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                    <details id="form-revenue-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
+                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter un revenu</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                        </summary>
+                        <div class="space-y-3 mt-4">
+                            <div>
+                                <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
                         </div>
-                        <div>
-                            <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                        </div>
-                        <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
-                    </div>
+                    </details>
                 </div>
                 <div class="md:col-span-2 space-y-3">
                     <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Sources de revenus (Cliquez pour modifier)</h2>
@@ -107,23 +112,28 @@
         <div id="tab-depenses" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2 text-base"><i class="fa-solid fa-plus-circle text-rose-500"></i> Nouvelle charge</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <input type="text" id="exp-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                    <details id="form-expense-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
+                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-rose-500"></i> Nouvelle charge</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                        </summary>
+                        <div class="space-y-3 mt-4">
+                            <div>
+                                <input type="text" id="exp-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <details id="exp-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                    <span>Personnaliser l'apparence</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                                </summary>
+                                <div class="pt-3 mt-3 border-t border-slate-200" id="exp-picker-mount"></div>
+                            </details>
+                            <button onclick="addExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
                         </div>
-                        <div>
-                            <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                        </div>
-                        <details class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden">
-                            <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                                <span>Personnaliser l'apparence</span>
-                                <i class="fa-solid fa-chevron-down text-xs transition-transform"></i>
-                            </summary>
-                            <div class="pt-3 mt-3 border-t border-slate-200" id="exp-picker-mount"></div>
-                        </details>
-                        <button onclick="addExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
-                    </div>
+                    </details>
                 </div>
                 <div class="md:col-span-2 space-y-3">
                     <div class="flex justify-between items-end mb-2">
@@ -138,23 +148,28 @@
         <div id="tab-envelopes" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2 text-base"><i class="fa-solid fa-folder-plus text-indigo-500"></i> Créer une enveloppe</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <input type="text" id="env-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                    <details id="form-envelope-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
+                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-folder-plus text-indigo-500"></i> Créer une enveloppe</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                        </summary>
+                        <div class="space-y-3 mt-4">
+                            <div>
+                                <input type="text" id="env-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <input type="number" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <details id="env-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                    <span>Personnaliser l'apparence</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                                </summary>
+                                <div class="pt-3 mt-3 border-t border-slate-200" id="env-picker-mount"></div>
+                            </details>
+                            <button onclick="addEnvelope()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Créer l'enveloppe</button>
                         </div>
-                        <div>
-                            <input type="number" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                        </div>
-                        <details class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden">
-                            <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                                <span>Personnaliser l'apparence</span>
-                                <i class="fa-solid fa-chevron-down text-xs transition-transform"></i>
-                            </summary>
-                            <div class="pt-3 mt-3 border-t border-slate-200" id="env-picker-mount"></div>
-                        </details>
-                        <button onclick="addEnvelope()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Créer l'enveloppe</button>
-                    </div>
+                    </details>
                 </div>
                 <div class="md:col-span-2 space-y-5">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex justify-center items-center mb-6">
@@ -488,6 +503,10 @@
             if (name && !isNaN(amount) && amount > 0) {
                 db.revenus.push({ id: Date.now(), name, amount });
                 document.getElementById('rev-name').value = ''; document.getElementById('rev-amount').value = '';
+                
+                // Referme le menu accordéon
+                document.getElementById('form-revenue-toggle').removeAttribute('open');
+                
                 saveToLocalStorage();
                 showToast("Revenu ajouté");
             } else { showToast("Champ invalide", true); }
@@ -499,8 +518,12 @@
             if (name && !isNaN(amount) && amount > 0) {
                 db.expenses.push({ id: Date.now(), name, amount, paid: false, icon: formStates.exp.icon, color: formStates.exp.color });
                 document.getElementById('exp-name').value = ''; document.getElementById('exp-amount').value = '';
-                const details = document.querySelector('#tab-depenses details');
+                
+                // Referme les menus accordéons
+                document.getElementById('form-expense-toggle').removeAttribute('open');
+                const details = document.getElementById('exp-appearance-details');
                 if(details) details.removeAttribute('open');
+                
                 saveToLocalStorage();
                 showToast("Charge ajoutée");
             } else { showToast("Champ invalide", true); }
@@ -512,8 +535,12 @@
             if (name && !isNaN(budget) && budget > 0) {
                 db.envelopes.push({ id: Date.now(), name, budget, spent: 0, icon: formStates.env.icon, color: formStates.env.color });
                 document.getElementById('env-name').value = ''; document.getElementById('env-budget').value = '';
-                const details = document.querySelector('#tab-envelopes details');
+                
+                // Referme les menus accordéons
+                document.getElementById('form-envelope-toggle').removeAttribute('open');
+                const details = document.getElementById('env-appearance-details');
                 if(details) details.removeAttribute('open');
+                
                 saveToLocalStorage();
                 showToast("Enveloppe créée");
             } else { showToast("Champ invalide", true); }
