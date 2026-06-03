@@ -137,7 +137,8 @@
                                 </summary>
                                 <div class="space-y-3 mt-4">
                                     <div>
-                                        <input type="text" id="perso-exp-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                        <input type="text" id="perso-exp-name" list="perso-expenses-list" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                        <datalist id="perso-expenses-list"></datalist>
                                     </div>
                                     <div>
                                         <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
@@ -234,7 +235,8 @@
                         </summary>
                         <div class="space-y-3 mt-4">
                             <div>
-                                <input type="text" id="exp-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <input type="text" id="exp-name" list="common-expenses-list" oninput="checkAutoFill('exp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <datalist id="common-expenses-list"></datalist>
                             </div>
                             <div>
                                 <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
@@ -581,6 +583,39 @@
             modalCallback(val);
             closeModal();
         });
+
+        // --- AUTO-COMPLÉTION INTELLIGENTE ---
+        let expenseHistory = {};
+        let persoHistory = {};
+
+        function updateAutocompleteData() {
+            // Mémorise la dernière version de chaque dépense
+            if (db.expenses) db.expenses.forEach(e => { expenseHistory[e.name] = e; });
+            if (localDb.personalExpenses) localDb.personalExpenses.forEach(e => { persoHistory[e.name] = e; });
+
+            // Remplit les listes déroulantes cachées du navigateur
+            const expList = document.getElementById('common-expenses-list');
+            if(expList) expList.innerHTML = Object.keys(expenseHistory).map(name => `<option value="${name}">`).join('');
+
+            const persoList = document.getElementById('perso-expenses-list');
+            if(persoList) persoList.innerHTML = Object.keys(persoHistory).map(name => `<option value="${name}">`).join('');
+        }
+
+        function checkAutoFill(type) {
+            let nameInput = document.getElementById(type === 'exp' ? 'exp-name' : 'perso-exp-name');
+            let amountInput = document.getElementById(type === 'exp' ? 'exp-amount' : 'perso-exp-amount');
+            let history = type === 'exp' ? expenseHistory : persoHistory;
+
+            const val = nameInput.value.trim();
+            if (history[val]) {
+                const pastExp = history[val];
+                // Pré-remplit le montant uniquement si la case est vide
+                if (amountInput.value === '') amountInput.value = pastExp.amount;
+                // Applique instantanément la couleur et l'icône habituelles
+                if (pastExp.icon) selectIcon(type, pastExp.icon);
+                if (pastExp.color) selectColor(type, pastExp.color);
+            }
+        }
 
         // --- FONCTIONS COMMUNES D'ÉDITION ---
         function editName(type, id) {
@@ -970,6 +1005,9 @@
                 statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-rose-50 text-rose-700";
                 statusEl.innerText = "Attention : Vos charges et enveloppes dépassent les fonds du pot commun !";
             }
+
+            // Met à jour la mémoire de l'autocomplétion
+            updateAutocompleteData();
         }
         
         // Enregistrement du Service Worker pour permettre l'installation PWA
