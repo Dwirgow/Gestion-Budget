@@ -195,32 +195,13 @@
                 </div>
             </div>
         </div>
-
         <div id="tab-revenus" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <details id="form-revenue-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
-                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter au pot commun</span>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                        </summary>
-                        <div class="space-y-3 mt-4">
-                            <p class="text-xs text-slate-500 mb-2">Ajoutez ici les virements que vous ou votre conjoint(e) faites vers le compte joint pour la synchronisation globale.</p>
-                            <div>
-                                <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <div>
-                                <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter au Pot Commun</button>
-                        </div>
-                    </details>
-                </div>
-                <div class="md:col-span-2 space-y-5">
+                <div class="space-y-6">
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
                         <details class="[&_summary::-webkit-details-marker]:hidden group">
                             <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Calculateur de répartition (Prorata)</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Calculateur (Prorata)</span>
                                 <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
                             </summary>
                             <div class="mt-4 space-y-4">
@@ -241,11 +222,11 @@
                                 </div>
                                 <div id="prorata-result" class="hidden bg-indigo-50 p-4 rounded-xl text-sm border border-indigo-100">
                                     <div class="flex justify-between items-center mb-2 border-b border-indigo-100 pb-2">
-                                        <span class="text-indigo-800 font-medium">Ma part équitable :</span> 
+                                        <span class="text-indigo-800 font-medium">Ma part :</span> 
                                         <strong class="text-indigo-900 text-lg" id="calc-part-1">0 €</strong>
                                     </div>
                                     <div class="flex justify-between items-center">
-                                        <span class="text-indigo-800 font-medium">Sa part équitable :</span> 
+                                        <span class="text-indigo-800 font-medium">Sa part :</span> 
                                         <strong class="text-indigo-900 text-lg" id="calc-part-2">0 €</strong>
                                     </div>
                                 </div>
@@ -253,10 +234,29 @@
                         </details>
                     </div>
 
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Fonds disponibles pour le compte commun</h2>
-                        <div id="revenues-list" class="space-y-2"></div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
+                        <details id="form-revenue-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
+                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter au pot commun</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                            </summary>
+                            <div class="space-y-3 mt-4">
+                                <p class="text-xs text-slate-500 mb-2">Ajoutez ici les virements que vous ou votre conjoint(e) faites vers le compte joint pour la synchronisation globale.</p>
+                                <div>
+                                    <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter au Pot Commun</button>
+                            </div>
+                        </details>
                     </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-3">
+                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Fonds disponibles pour le compte commun</h2>
+                    <div id="revenues-list" class="space-y-2"></div>
                 </div>
             </div>
         </div>
