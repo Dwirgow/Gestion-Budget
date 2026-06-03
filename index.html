@@ -216,9 +216,47 @@
                         </div>
                     </details>
                 </div>
-                <div class="md:col-span-2 space-y-3">
-                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Fonds disponibles pour le compte commun</h2>
-                    <div id="revenues-list" class="space-y-2"></div>
+                <div class="md:col-span-2 space-y-5">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <details class="[&_summary::-webkit-details-marker]:hidden group">
+                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Calculateur de répartition (Prorata)</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                            </summary>
+                            <div class="mt-4 space-y-4">
+                                <p class="text-[10px] text-slate-500 uppercase tracking-wide">Outil local : ces données ne sont pas sauvegardées.</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire</label>
+                                        <input type="number" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire Conjoint(e)</label>
+                                        <input type="number" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-slate-600 block mb-1">Besoin total du Pot Commun</label>
+                                    <input type="number" id="calc-besoin" placeholder="Total des charges + enveloppes (€)" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                </div>
+                                <div id="prorata-result" class="hidden bg-indigo-50 p-4 rounded-xl text-sm border border-indigo-100">
+                                    <div class="flex justify-between items-center mb-2 border-b border-indigo-100 pb-2">
+                                        <span class="text-indigo-800 font-medium">Ma part équitable :</span> 
+                                        <strong class="text-indigo-900 text-lg" id="calc-part-1">0 €</strong>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-indigo-800 font-medium">Sa part équitable :</span> 
+                                        <strong class="text-indigo-900 text-lg" id="calc-part-2">0 €</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Fonds disponibles pour le compte commun</h2>
+                        <div id="revenues-list" class="space-y-2"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1007,7 +1045,28 @@
             // Met à jour la mémoire de l'autocomplétion
             updateAutocompleteData();
         }
-        
+        // --- CALCULATEUR DE PRORATA ---
+        function calculateProrata() {
+            const s1 = parseFloat(document.getElementById('calc-sal-1').value) || 0;
+            const s2 = parseFloat(document.getElementById('calc-sal-2').value) || 0;
+            const besoin = parseFloat(document.getElementById('calc-besoin').value) || 0;
+            const resDiv = document.getElementById('prorata-result');
+
+            if (s1 > 0 && s2 > 0 && besoin > 0) {
+                const totalSal = s1 + s2;
+                const part1 = (s1 / totalSal) * besoin;
+                const part2 = (s2 / totalSal) * besoin;
+                const pct1 = Math.round((s1 / totalSal) * 100);
+                const pct2 = Math.round((s2 / totalSal) * 100);
+                
+                document.getElementById('calc-part-1').innerText = part1.toFixed(2) + " € (" + pct1 + "%)";
+                document.getElementById('calc-part-2').innerText = part2.toFixed(2) + " € (" + pct2 + "%)";
+                resDiv.classList.remove('hidden');
+            } else {
+                resDiv.classList.add('hidden');
+            }
+        }
+            
         // Enregistrement du Service Worker pour permettre l'installation PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
