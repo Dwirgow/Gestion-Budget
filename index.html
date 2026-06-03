@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Budget Enveloppes Familial</title>
+    <title>Gestion de Budget Familial</title>
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Budget">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -964,6 +970,13 @@
                 statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-rose-50 text-rose-700";
                 statusEl.innerText = "Attention : Vos charges et enveloppes dépassent les fonds du pot commun !";
             }
+        }
+    </script>
+        // Enregistrement du Service Worker pour permettre l'installation PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker non enregistré', err));
+            });
         }
     </script>
 </body>
