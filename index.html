@@ -971,11 +971,13 @@
                 statusEl.innerText = "Attention : Vos charges et enveloppes dépassent les fonds du pot commun !";
             }
         }
-    </script>
+        
         // Enregistrement du Service Worker pour permettre l'installation PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker non enregistré', err));
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker enregistré !'))
+                    .catch(err => console.log('Erreur Service Worker', err));
             });
         }
     </script>
