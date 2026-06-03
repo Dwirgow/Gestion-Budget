@@ -56,8 +56,8 @@
                     <i class="fa-solid fa-vault text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight">Gestion Budget Familial</h1>
-                    <p class="text-xs text-slate-500">Gestion de Budget synchronisé</p>
+                    <h1 class="text-xl font-bold tracking-tight">Budget Synchronisé</h1>
+                    <p class="text-xs text-slate-500">Gestion Budget Perso & Familial</p>
                 </div>
             </div>
             
@@ -69,41 +69,133 @@
         </header>
 
         <nav class="flex border-b border-slate-200 bg-white rounded-xl p-1.5 shadow-sm border border-slate-100 mb-6 overflow-x-auto whitespace-nowrap hide-scrollbar">
-            <button onclick="switchTab('revenus')" id="btn-revenus" class="nav-tab active flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-hand-holding-dollar"></i> Revenus
+            <button onclick="switchTab('perso')" id="btn-perso" class="nav-tab active flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-mobile-screen"></i> Compte Personnel
+            </button>
+            <button onclick="switchTab('revenus')" id="btn-revenus" class="nav-tab flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Pot Commun
             </button>
             <button onclick="switchTab('depenses')" id="btn-depenses" class="nav-tab flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-file-invoice-dollar"></i> Dépenses Fixes
+                <i class="fa-solid fa-file-invoice-dollar"></i> Charges Communes
             </button>
             <button onclick="switchTab('envelopes')" id="btn-envelopes" class="nav-tab flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
                 <i class="fa-solid fa-envelope-open-text"></i> Enveloppes
             </button>
             <button onclick="switchTab('recap')" id="btn-recap" class="nav-tab flex-1 text-center py-2.5 px-4 font-semibold text-sm text-slate-500 border-b-2 border-transparent rounded-lg transition hover:text-slate-800 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-chart-pie"></i> Récapitulatif
+                <i class="fa-solid fa-chart-pie"></i> Bilan
             </button>
         </nav>
 
-        <div id="tab-revenus" class="tab-content active">
+        <div id="tab-perso" class="tab-content active">
+            <div id="perso-content-screen">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="space-y-6">
+                        
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                            <h3 class="font-bold text-slate-900 flex items-center gap-2 mb-1">
+                                <i class="fa-solid fa-wallet text-amber-500"></i> Mon Salaire
+                            </h3>
+                            <p class="text-[10px] text-slate-400 mb-4 uppercase tracking-wide">Donnée locale</p>
+                            <div class="flex gap-2">
+                                <input type="number" id="perso-salary-input" placeholder="Montant total (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 rounded-xl transition shadow-sm"><i class="fa-solid fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                            <h3 class="font-bold text-slate-900 flex items-center gap-2 mb-1">
+                                <i class="fa-solid fa-right-left text-blue-500"></i> Versement Pot Commun
+                            </h3>
+                            <p class="text-[10px] text-slate-400 mb-4 uppercase tracking-wide">Ce que vous versez sur le compte joint</p>
+                            <div class="flex gap-2">
+                                <input type="number" id="perso-contribution-input" placeholder="Ma contribution (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 rounded-xl transition shadow-sm"><i class="fa-solid fa-check"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
+                            <details id="form-perso-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
+                                <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-rose-500"></i> Dépense Personnelle</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                                </summary>
+                                <div class="space-y-3 mt-4">
+                                    <div>
+                                        <input type="text" id="perso-exp-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    </div>
+                                    <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                                        <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                            <span>Personnaliser l'apparence</span>
+                                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                                        </summary>
+                                        <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
+                                    </details>
+                                    <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 space-y-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Mon Récapitulatif Personnel</h2>
+                            <div class="space-y-3 mb-6">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-slate-600">Mon Salaire Net Total :</span>
+                                    <span class="font-bold text-slate-900" id="perso-salary-display">0.00 €</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-rose-600">Ma Part Pot Commun :</span>
+                                    <span class="font-bold text-rose-600" id="perso-contribution-display">-0.00 €</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-rose-600">Total Dépenses Perso :</span>
+                                    <span class="font-bold text-rose-600" id="perso-expenses-display">-0.00 €</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Mon Reste à Vivre Perso</span>
+                                <span class="text-3xl font-black tracking-tight text-emerald-600" id="perso-reste-display">0.00 €</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-end mb-2">
+                                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Mes dépenses 100% personnelles</h2>
+                                <span class="text-xs text-slate-400 italic">Cochez quand remboursé</span>
+                            </div>
+                            <div id="perso-expenses-list" class="space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-revenus" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
                     <details id="form-revenue-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
                         <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter un revenu</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter au pot commun</span>
                             <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
                         </summary>
                         <div class="space-y-3 mt-4">
+                            <p class="text-xs text-slate-500 mb-2">Ajoutez ici les virements que vous ou votre conjoint(e) faites vers le compte joint pour la synchronisation globale.</p>
                             <div>
                                 <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             </div>
                             <div>
                                 <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             </div>
-                            <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                            <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter au Pot Commun</button>
                         </div>
                     </details>
                 </div>
                 <div class="md:col-span-2 space-y-3">
-                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Sources de revenus (Cliquez pour modifier)</h2>
+                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Fonds disponibles pour le compte commun</h2>
                     <div id="revenues-list" class="space-y-2"></div>
                 </div>
             </div>
@@ -193,7 +285,7 @@
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-trend-up"></i></div>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Total revenus</h4>
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Fonds Pot Commun</h4>
                                 <p class="text-2xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
                             </div>
                         </div>
@@ -202,7 +294,7 @@
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-building-columns"></i></div>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Charges fixes</h4>
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Charges communes</h4>
                                 <p class="text-2xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
                             </div>
                         </div>
@@ -220,8 +312,8 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between text-center items-center">
                     <div class="mt-4">
                         <div class="w-16 h-16 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm"><i class="fa-solid fa-piggy-bank"></i></div>
-                        <h3 class="text-lg font-bold text-slate-900">Capacité d'Épargne Réelle</h3>
-                        <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">Montant qui reste sur votre compte après déduction des charges et prévisions d'enveloppes.</p>
+                        <h3 class="text-lg font-bold text-slate-900">Reste à Vivre Commun</h3>
+                        <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">Montant qui reste sur le pot commun après déduction des charges et prévisions d'enveloppes.</p>
                     </div>
                     <div class="my-6">
                         <span class="text-4xl md:text-5xl font-black tracking-tight" id="recap-savings">0.00 €</span>
@@ -250,7 +342,7 @@
 
     <script>
         // ==========================================
-        // 🛠️ CONFIGURATION FIREBASE À COMPLÉTER
+        // 🛠️ CONFIGURATION FIREBASE (Pot Commun)
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDey4gi4wbmlWO4TTrTjp-BxWLHe75pkMc",
@@ -262,33 +354,48 @@
             appId: "1:824581577517:web:fa0abe802b83c4fbdf51a4"
         };
         
-        // Initialisation de Firebase
         firebase.initializeApp(firebaseConfig);
-        let dbRef = null;
+        let dbRef = firebase.database().ref('budgets/notre_budget_secret_123');
 
-        // Variables de structure globales
-        const COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#6366f1', '#a855f7', '#ec4899', '#64748b'];
-        const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar'];
+        // NOUVELLE PALETTE DE COULEURS BIEN DISTINCTES
+        // Cramoisi, Orange vif, Jaune or, Vert sapin, Menthe/Teal, Bleu ciel, Bleu marine, Violet, Rose fuchsia, Noir/Ardoise
+        const COLORS = ['#d90429', '#fb8500', '#ffb703', '#2b9348', '#06d6a0', '#00b4d8', '#03045e', '#7209b7', '#f72585', '#1f2937'];
+        const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar', 'fa-user-tie', 'fa-mobile-screen'];
 
         let formStates = {
-            exp: { icon: 'fa-file-invoice-dollar', color: '#64748b' },
-            env: { icon: 'fa-basket-shopping', color: '#3b82f6' },
+            exp: { icon: 'fa-file-invoice-dollar', color: '#1f2937' },
+            env: { icon: 'fa-basket-shopping', color: '#00b4d8' },
+            persoExp: { icon: 'fa-user-tie', color: '#7209b7' },
             modal: { icon: '', color: '' }
         };
 
-        const initialDefaultData = {
-            revenus: [{ id: 1, name: "Salaire", amount: 2000 }],
-            expenses: [{ id: 2, name: "Loyer", amount: 700, paid: false, icon: 'fa-house', color: '#6366f1' }],
-            envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#3b82f6", icon: 'fa-basket-shopping' }]
+        // 1. BASE DE DONNÉES CLOUD (Partagée)
+        let db = {
+            revenus: [],
+            expenses: [],
+            envelopes: []
         };
 
-        let db = initialDefaultData;
+        // 2. BASE DE DONNÉES LOCALE (Uniquement sur ce téléphone)
+        let localDb = {
+            personalSalary: 0,
+            personalContribution: 0,
+            personalExpenses: []
+        };
 
-        // Connexion directe à votre salon privé Cloud
-        // 💡 Astuce : Changez 'notre_budget_secret_123' par un mot ou chiffre unique à vous pour que personne ne le devine.
-        dbRef = firebase.database().ref('budgets/notre_budget_secret_123');
+        // Récupérer les données locales sauvegardées dans le navigateur
+        const savedLocalData = localStorage.getItem('budgetApp_localData');
+        if (savedLocalData) {
+            try {
+                localDb = JSON.parse(savedLocalData);
+                if (!localDb.personalExpenses) localDb.personalExpenses = [];
+                if (localDb.personalContribution === undefined) localDb.personalContribution = 0;
+            } catch (e) {
+                console.error("Erreur de lecture locale", e);
+            }
+        }
 
-        // ÉCOUTE DU CLOUD EN TEMPS RÉEL (Synchro automatique)
+        // Écouter les données du pot commun depuis Firebase
         dbRef.on('value', (snapshot) => {
             const cloudData = snapshot.val();
             if (cloudData) {
@@ -297,17 +404,28 @@
                 if (!db.expenses) db.expenses = [];
                 if (!db.envelopes) db.envelopes = [];
             } else {
-                db = initialDefaultData;
-                saveToLocalStorage(); // Initialise la base si elle est vide
+                // Initialisation par défaut si la DB est vide
+                db = {
+                    revenus: [{ id: 1, name: "Virement compte commun", amount: 1500 }],
+                    expenses: [{ id: 2, name: "Loyer", amount: 700, paid: false, icon: 'fa-house', color: '#03045e' }],
+                    envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#00b4d8", icon: 'fa-basket-shopping' }]
+                };
+                saveToFirebase();
             }
             renderAll();
         });
 
-        // Fonction de sauvegarde modifiée pour pousser sur Firebase
-        function saveToLocalStorage() {
+        // Fonction de sauvegarde CLOUD (Pot Commun)
+        function saveToFirebase() {
             if (dbRef) {
                 dbRef.set(db).catch(err => showToast("Erreur de sauvegarde Cloud", true));
             }
+        }
+
+        // Fonction de sauvegarde LOCALE (Espace Perso)
+        function saveToLocal() {
+            localStorage.setItem('budgetApp_localData', JSON.stringify(localDb));
+            renderAll(); // Rendu manuel car Firebase ne déclenchera pas l'event
         }
 
         // --- GÉNÉRATION DE L'INTERFACE DES SÉLECTEURS ---
@@ -322,11 +440,11 @@
 
             return `
                 <div class="mb-3">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Couleur (10)</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Couleur</span>
                     <div class="flex flex-wrap gap-1.5">${colorsHtml}</div>
                 </div>
                 <div>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Icône (15)</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Icône</span>
                     <div class="flex flex-wrap gap-1">${iconsHtml}</div>
                 </div>
             `;
@@ -335,6 +453,7 @@
         function renderFormPickers() {
             document.getElementById('exp-picker-mount').innerHTML = createPickerHTML('exp', formStates.exp.icon, formStates.exp.color);
             document.getElementById('env-picker-mount').innerHTML = createPickerHTML('env', formStates.env.icon, formStates.env.color);
+            document.getElementById('perso-picker-mount').innerHTML = createPickerHTML('persoExp', formStates.persoExp.icon, formStates.persoExp.color);
         }
 
         function renderModalPickers() {
@@ -440,29 +559,38 @@
             closeModal();
         });
 
+        // --- FONCTIONS COMMUNES D'ÉDITION ---
         function editName(type, id) {
-            const item = db[type].find(i => i.id === id);
+            const isLocal = type === 'personalExpenses';
+            const targetDb = isLocal ? localDb : db;
+            const item = targetDb[type].find(i => i.id === id);
+            
             if (!item) return;
             openModal({ title: "Modifier l'intitulé :", type: 'text', value: item.name }, (newName) => {
                 if (newName && newName.trim() !== "") {
                     item.name = newName.trim();
-                    saveToLocalStorage();
+                    if (isLocal) saveToLocal(); else saveToFirebase();
                     showToast("Intitulé mis à jour");
                 }
             });
         }
 
         function editAmount(type, id) {
-            const item = db[type].find(i => i.id === id);
+            const isLocal = type === 'personalExpenses';
+            const targetDb = isLocal ? localDb : db;
+            const item = targetDb[type].find(i => i.id === id);
+            
             if (!item) return;
             const currentVal = type === 'envelopes' ? item.budget : item.amount;
+            
             openModal({ title: "Modifier le montant alloué (€) :", type: 'number', value: currentVal }, (newValStr) => {
                 if (newValStr) {
                     const newVal = parseFloat(newValStr.toString().replace(',', '.'));
                     if (!isNaN(newVal) && newVal >= 0) {
                         if (type === 'envelopes') item.budget = newVal;
                         else item.amount = newVal;
-                        saveToLocalStorage();
+                        
+                        if (isLocal) saveToLocal(); else saveToFirebase();
                         showToast("Montant mis à jour");
                     } else { showToast("Montant invalide", true); }
                 }
@@ -470,13 +598,16 @@
         }
 
         function editAppearance(type, id) {
-            const item = db[type].find(i => i.id === id);
+            const isLocal = type === 'personalExpenses';
+            const targetDb = isLocal ? localDb : db;
+            const item = targetDb[type].find(i => i.id === id);
+            
             if (!item) return;
             openModal({ title: "Modifier l'apparence :", type: 'appearance', value: { icon: item.icon || ICONS[0], color: item.color || COLORS[0] } }, (newApp) => {
                 if (newApp) {
                     item.icon = newApp.icon;
                     item.color = newApp.color;
-                    saveToLocalStorage();
+                    if (isLocal) saveToLocal(); else saveToFirebase();
                     showToast("Apparence mise à jour");
                 }
             });
@@ -490,25 +621,39 @@
                     const newVal = parseFloat(newValStr.toString().replace(',', '.'));
                     if (!isNaN(newVal) && newVal >= 0) {
                         env.spent = newVal;
-                        saveToLocalStorage();
+                        saveToFirebase();
                         showToast("Dépense corrigée");
                     } else { showToast("Montant invalide", true); }
                 }
             });
         }
 
+        function deleteItem(type, id) {
+            const isLocal = type === 'personalExpenses';
+            openModal({ title: "Supprimer cet élément ?", desc: "Cette action est irréversible.", confirmText: "Supprimer", isDanger: true }, (confirm) => {
+                if (confirm) {
+                    if (isLocal) {
+                        localDb[type] = localDb[type].filter(item => item.id !== id);
+                        saveToLocal();
+                    } else {
+                        db[type] = db[type].filter(item => item.id !== id);
+                        saveToFirebase();
+                    }
+                    showToast("Élément supprimé");
+                }
+            });
+        }
+
+        // --- ACTIONS SUR LE CLOUD ---
         function addRevenue() {
             const name = document.getElementById('rev-name').value.trim();
             const amount = parseFloat(document.getElementById('rev-amount').value);
             if (name && !isNaN(amount) && amount > 0) {
                 db.revenus.push({ id: Date.now(), name, amount });
                 document.getElementById('rev-name').value = ''; document.getElementById('rev-amount').value = '';
-                
-                // Referme le menu accordéon
                 document.getElementById('form-revenue-toggle').removeAttribute('open');
-                
-                saveToLocalStorage();
-                showToast("Revenu ajouté");
+                saveToFirebase();
+                showToast("Ajouté au pot commun");
             } else { showToast("Champ invalide", true); }
         }
 
@@ -518,13 +663,10 @@
             if (name && !isNaN(amount) && amount > 0) {
                 db.expenses.push({ id: Date.now(), name, amount, paid: false, icon: formStates.exp.icon, color: formStates.exp.color });
                 document.getElementById('exp-name').value = ''; document.getElementById('exp-amount').value = '';
-                
-                // Referme les menus accordéons
                 document.getElementById('form-expense-toggle').removeAttribute('open');
                 const details = document.getElementById('exp-appearance-details');
                 if(details) details.removeAttribute('open');
-                
-                saveToLocalStorage();
+                saveToFirebase();
                 showToast("Charge ajoutée");
             } else { showToast("Champ invalide", true); }
         }
@@ -535,30 +677,17 @@
             if (name && !isNaN(budget) && budget > 0) {
                 db.envelopes.push({ id: Date.now(), name, budget, spent: 0, icon: formStates.env.icon, color: formStates.env.color });
                 document.getElementById('env-name').value = ''; document.getElementById('env-budget').value = '';
-                
-                // Referme les menus accordéons
                 document.getElementById('form-envelope-toggle').removeAttribute('open');
                 const details = document.getElementById('env-appearance-details');
                 if(details) details.removeAttribute('open');
-                
-                saveToLocalStorage();
+                saveToFirebase();
                 showToast("Enveloppe créée");
             } else { showToast("Champ invalide", true); }
         }
 
-        function deleteItem(type, id) {
-            openModal({ title: "Supprimer cet élément ?", desc: "Cette action est irréversible.", confirmText: "Supprimer", isDanger: true }, (confirm) => {
-                if (confirm) {
-                    db[type] = db[type].filter(item => item.id !== id);
-                    saveToLocalStorage();
-                    showToast("Élément supprimé");
-                }
-            });
-        }
-
         function toggleExpensePaid(id) {
             const exp = db.expenses.find(e => e.id === id);
-            if (exp) { exp.paid = !exp.paid; saveToLocalStorage(); }
+            if (exp) { exp.paid = !exp.paid; saveToFirebase(); }
         }
 
         function manualSpend(id) {
@@ -568,26 +697,80 @@
             if (!isNaN(amount) && amount > 0 && env) {
                 env.spent += amount;
                 input.value = '';
-                saveToLocalStorage();
+                saveToFirebase();
                 showToast("Dépense enregistrée");
             } else { showToast("Montant invalide", true); }
         }
 
         function resetMonthExpenses() {
-            openModal({ title: "Nouveau mois", desc: "Remettre les dépenses à 0€ et décocher les charges payées ?", confirmText: "Oui, réinitialiser" }, (confirm) => {
+            openModal({ title: "Nouveau mois", desc: "Remettre les dépenses à 0€, décocher les charges communes et supprimer les dépenses perso ?", confirmText: "Oui, réinitialiser" }, (confirm) => {
                 if (confirm) {
+                    // Remise à zéro Cloud
                     if (db.envelopes) db.envelopes.forEach(e => e.spent = 0);
                     if (db.expenses) db.expenses.forEach(e => e.paid = false);
-                    saveToLocalStorage();
+                    saveToFirebase();
+                    
+                    // Remise à zéro Locale (Dépenses perso)
+                    localDb.personalExpenses = [];
+                    saveToLocal();
+                    
                     showToast("Nouveau mois initialisé");
                 }
             });
         }
 
+        // --- ACTIONS LOCALES (Personnel) ---
+        function updatePersonalSalary() {
+            const amount = parseFloat(document.getElementById('perso-salary-input').value);
+            if (!isNaN(amount) && amount >= 0) {
+                localDb.personalSalary = amount;
+                saveToLocal();
+                showToast("Salaire mis à jour");
+            } else {
+                showToast("Montant invalide", true);
+            }
+        }
+
+        function updatePersonalContribution() {
+            const amount = parseFloat(document.getElementById('perso-contribution-input').value);
+            if (!isNaN(amount) && amount >= 0) {
+                localDb.personalContribution = amount;
+                saveToLocal();
+                showToast("Contribution mise à jour");
+            } else {
+                showToast("Montant invalide", true);
+            }
+        }
+
+        function addPersonalExpense() {
+            const name = document.getElementById('perso-exp-name').value.trim();
+            const amount = parseFloat(document.getElementById('perso-exp-amount').value);
+            if (name && !isNaN(amount) && amount > 0) {
+                // Ajout de "paid: false" pour les dépenses perso
+                localDb.personalExpenses.push({ id: Date.now(), name, amount, icon: formStates.persoExp.icon, color: formStates.persoExp.color, paid: false });
+                document.getElementById('perso-exp-name').value = '';
+                document.getElementById('perso-exp-amount').value = '';
+                
+                document.getElementById('form-perso-toggle').removeAttribute('open');
+                const details = document.getElementById('perso-appearance-details');
+                if(details) details.removeAttribute('open');
+                
+                saveToLocal();
+                showToast("Dépense personnelle ajoutée");
+            } else { showToast("Champ invalide", true); }
+        }
+
+        // Coche/Décoche une dépense perso
+        function togglePersonalExpensePaid(id) {
+            const exp = localDb.personalExpenses.find(e => e.id === id);
+            if (exp) { exp.paid = !exp.paid; saveToLocal(); }
+        }
+
         // --- RENDU UI ---
         function renderAll() {
-            let totalRevenues = 0, totalExpenses = 0, totalEnvelopesBudget = 0, totalEnvelopesSpent = 0;
+            let totalRevenues = 0, totalExpenses = 0, totalEnvelopesBudget = 0, totalEnvelopesSpent = 0, totalPersonalExpenses = 0;
 
+            // Rendu Revenus (CLOUD)
             const revList = document.getElementById('revenues-list');
             revList.innerHTML = '';
             db.revenus.forEach(r => {
@@ -605,19 +788,63 @@
                     </div>`;
             });
 
+            // Rendu Dépenses Perso (LOCAL)
+            const persoExpList = document.getElementById('perso-expenses-list');
+            persoExpList.innerHTML = '';
+            
+            const sortedPersoExpenses = [...localDb.personalExpenses].sort((a, b) => {
+                return COLORS.indexOf(a.color || '#7209b7') - COLORS.indexOf(b.color || '#7209b7');
+            });
+            
+            sortedPersoExpenses.forEach(e => {
+                totalPersonalExpenses += e.amount;
+                const isPaid = e.paid === true;
+                const color = e.color || '#7209b7';
+                const icon = e.icon || 'fa-user-tie';
+                
+                persoExpList.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-100 flex justify-between items-center group transition ${isPaid ? 'opacity-60 bg-slate-50' : ''}">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePersonalExpensePaid(${e.id})" class="check-expense">
+                            <div onclick="editAppearance('personalExpenses', ${e.id})" class="w-8 h-8 rounded-lg flex items-center justify-center text-white cursor-pointer shadow-sm hover:scale-110 transition flex-shrink-0" style="background-color: ${color}">
+                                <i class="fa-solid ${icon}"></i>
+                            </div>
+                            <span onclick="editName('personalExpenses', ${e.id})" class="font-medium text-sm cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted ${isPaid ? 'line-through text-slate-400' : 'text-slate-800'}">${e.name}</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span onclick="editAmount('personalExpenses', ${e.id})" class="font-bold text-sm cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted ${isPaid ? 'text-slate-400' : 'text-slate-900'}">${e.amount.toFixed(2)} €</span>
+                            <button onclick="deleteItem('personalExpenses', ${e.id})" class="text-slate-200 hover:text-rose-500 transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                        </div>
+                    </div>`;
+            });
+
+            // Mise à jour Recap Personnel (100% LOCAL)
+            document.getElementById('perso-salary-display').innerText = (localDb.personalSalary || 0).toFixed(2) + " €";
+            document.getElementById('perso-salary-input').value = localDb.personalSalary || '';
+            
+            document.getElementById('perso-contribution-display').innerText = "-" + (localDb.personalContribution || 0).toFixed(2) + " €";
+            document.getElementById('perso-contribution-input').value = localDb.personalContribution || '';
+            
+            document.getElementById('perso-expenses-display').innerText = "-" + totalPersonalExpenses.toFixed(2) + " €";
+            
+            const restePerso = (localDb.personalSalary || 0) - (localDb.personalContribution || 0) - totalPersonalExpenses;
+            const persoRestEl = document.getElementById('perso-reste-display');
+            persoRestEl.innerText = restePerso.toFixed(2) + " €";
+            persoRestEl.className = `text-3xl md:text-4xl font-black tracking-tight mt-1 ${restePerso >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+
+            // Rendu Charges Communes (CLOUD)
             const expList = document.getElementById('expenses-list');
             expList.innerHTML = '';
-            
-            // Tri des dépenses par couleur
             const sortedExpenses = [...db.expenses].sort((a, b) => {
-                return COLORS.indexOf(a.color || '#64748b') - COLORS.indexOf(b.color || '#64748b');
+                return COLORS.indexOf(a.color || '#1f2937') - COLORS.indexOf(b.color || '#1f2937');
             });
             
             sortedExpenses.forEach(e => {
                 totalExpenses += e.amount;
                 const isPaid = e.paid === true;
-                const color = e.color || '#64748b';
+                const color = e.color || '#1f2937';
                 const icon = e.icon || 'fa-file-invoice-dollar';
+                
                 expList.innerHTML += `
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-100 flex justify-between items-center group transition ${isPaid ? 'opacity-60 bg-slate-50' : ''}">
                         <div class="flex items-center gap-3">
@@ -634,14 +861,14 @@
                     </div>`;
             });
 
+            // Rendu Enveloppes (CLOUD)
             const envList = document.getElementById('envelopes-list');
             envList.innerHTML = '';
             let currentPercent = 0;
             let gradientSegments = [];
 
-            // Tri des enveloppes par couleur
             const sortedEnvelopes = [...db.envelopes].sort((a, b) => {
-                return COLORS.indexOf(a.color || '#3b82f6') - COLORS.indexOf(b.color || '#3b82f6');
+                return COLORS.indexOf(a.color || '#00b4d8') - COLORS.indexOf(b.color || '#00b4d8');
             });
 
             sortedEnvelopes.forEach(e => {
@@ -650,7 +877,7 @@
                 const rem = e.budget - e.spent;
                 const pct = Math.min((e.spent / e.budget) * 100, 100);
                 const over = e.spent > e.budget;
-                const color = e.color || '#3b82f6';
+                const color = e.color || '#00b4d8';
                 const icon = e.icon || 'fa-basket-shopping';
 
                 envList.innerHTML += `
@@ -688,7 +915,7 @@
                     const rem = Math.max(0, e.budget - e.spent);
                     const sliceSize = (rem / totalEnvelopesBudget) * 100;
                     if (sliceSize > 0) {
-                        const color = e.color || '#3b82f6';
+                        const color = e.color || '#00b4d8';
                         gradientSegments.push(`${color} ${currentPercent}% ${currentPercent + sliceSize}%`);
                         currentPercent += sliceSize;
                     }
@@ -703,6 +930,7 @@
             const envRemaining = Math.max(0, totalEnvelopesBudget - totalEnvelopesSpent);
             document.getElementById('env-donut-text').innerText = envRemaining.toFixed(0) + "€";
 
+            // Mise à Recap Commun (CLOUD)
             const savings = totalRevenues - totalExpenses - totalEnvelopesBudget;
             document.getElementById('recap-total-revenues').innerText = totalRevenues.toFixed(2) + " €";
             document.getElementById('recap-total-expenses').innerText = totalExpenses.toFixed(2) + " €";
@@ -713,11 +941,11 @@
             if (savings >= 0) {
                 document.getElementById('recap-savings').className = "text-4xl md:text-5xl font-black tracking-tight text-emerald-600";
                 statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700";
-                statusEl.innerText = "Budget équilibré. L'excédent est prêt pour l'épargne.";
+                statusEl.innerText = "Pot commun équilibré. L'excédent est prêt pour l'épargne commune.";
             } else {
                 document.getElementById('recap-savings').className = "text-4xl md:text-5xl font-black tracking-tight text-rose-600";
                 statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-rose-50 text-rose-700";
-                statusEl.innerText = "Attention : Vos charges et enveloppes dépassent vos revenus !";
+                statusEl.innerText = "Attention : Vos charges et enveloppes dépassent les fonds du pot commun !";
             }
         }
     </script>
