@@ -342,50 +342,85 @@
         </div>
 
         <div id="tab-recap" class="tab-content">
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-trend-up"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Fonds Pot Commun</h4>
-                                <p class="text-2xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-building-columns"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Charges communes</h4>
-                                <p class="text-2xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg"><i class="fa-solid fa-basket-shopping"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Enveloppes allouées</h4>
-                                <p class="text-2xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
-                            </div>
-                        </div>
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Colonne Gauche : Les totaux globaux -->
+        <div class="space-y-4">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Fonds Pot Commun</h4>
+                        <p class="text-2xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between text-center items-center">
-                    <div class="mt-4">
-                        <div class="w-16 h-16 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm"><i class="fa-solid fa-piggy-bank"></i></div>
-                        <h3 class="text-lg font-bold text-slate-900">Reste à Vivre Commun</h3>
-                        <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">Montant qui reste sur le pot commun après déduction des charges et prévisions d'enveloppes.</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-building-columns"></i></div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Charges communes</h4>
+                        <p class="text-2xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
                     </div>
-                    <div class="my-6">
-                        <span class="text-4xl md:text-5xl font-black tracking-tight" id="recap-savings">0.00 €</span>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Enveloppes (Prévu)</h4>
+                        <p class="text-2xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
                     </div>
-                    <div id="savings-status" class="w-full text-xs font-semibold px-4 py-2 rounded-xl"></div>
                 </div>
             </div>
         </div>
+
+        <!-- Colonne Droite : Le Volet Unique "Tableau Prévu VS Réel" -->
+        <div class="space-y-4">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+                <details class="[&_summary::-webkit-details-marker]:hidden group" open>
+                    <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none border-b border-slate-100 pb-3">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Bilan : Prévu vs Réel</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                    </summary>
+                    
+                    <div class="mt-4">
+                        <!-- Ligne de base -->
+                        <div class="flex justify-between items-center text-sm mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            <span class="text-slate-600 font-medium">Fonds dispo. (après charges) :</span>
+                            <span class="font-bold text-slate-800" id="recap-fonds-base">0.00 €</span>
+                        </div>
+
+                        <!-- En-tête du tableau -->
+                        <div class="grid grid-cols-3 gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-2 border-b border-slate-100 mb-3">
+                            <div class="col-span-1">Enveloppes</div>
+                            <div class="text-right">Prévu</div>
+                            <div class="text-right">Réel (Dépensé)</div>
+                        </div>
+
+                        <!-- Lignes du tableau injectées par JS -->
+                        <div id="recap-table-body" class="space-y-3 min-h-[100px]">
+                        </div>
+
+                        <!-- Pied du tableau : Reste à vivre -->
+                        <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t-2 border-slate-100 items-end">
+                            <div class="col-span-1 text-xs font-bold text-slate-800 uppercase tracking-wide leading-tight">
+                                Reste à<br>Vivre
+                            </div>
+                            <div class="text-right flex flex-col">
+                                <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Prévu</span>
+                                <span class="text-lg md:text-xl font-black" id="recap-reste-prev">0.00 €</span>
+                            </div>
+                            <div class="text-right flex flex-col">
+                                <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Réel</span>
+                                <span class="text-lg md:text-xl font-black" id="recap-reste-reel">0.00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
     </div>
+</div>
 
     <div id="app-modal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-50 p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300 overflow-y-auto">
         <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl transform transition-transform scale-95 duration-300 my-auto" id="app-modal-content">
@@ -1026,23 +1061,57 @@
             const envRemaining = Math.max(0, totalEnvelopesBudget - totalEnvelopesSpent);
             document.getElementById('env-donut-text').innerText = envRemaining.toFixed(0) + "€";
 
-            // Mise à Recap Commun (CLOUD)
-            const savings = totalRevenues - totalExpenses - totalEnvelopesBudget;
+            // ==========================================
+            // Mise à jour Recap Commun (CLOUD) - Tableau Prévu vs Réel
+            // ==========================================
+            
+            // Mise à jour des cartes de gauche
             document.getElementById('recap-total-revenues').innerText = totalRevenues.toFixed(2) + " €";
             document.getElementById('recap-total-expenses').innerText = totalExpenses.toFixed(2) + " €";
             document.getElementById('recap-total-envelopes').innerText = totalEnvelopesBudget.toFixed(2) + " €";
-            document.getElementById('recap-savings').innerText = savings.toFixed(2) + " €";
-            
-            const statusEl = document.getElementById('savings-status');
-            if (savings >= 0) {
-                document.getElementById('recap-savings').className = "text-4xl md:text-5xl font-black tracking-tight text-emerald-600";
-                statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700";
-                statusEl.innerText = "Pot commun équilibré. L'excédent est prêt pour l'épargne commune.";
+
+            // Calcul de la base de départ : Pot commun - Charges fixes
+            const fondsApresCharges = totalRevenues - totalExpenses;
+            document.getElementById('recap-fonds-base').innerText = fondsApresCharges.toFixed(2) + " €";
+
+            // Nettoyage du tableau
+            const tableBody = document.getElementById('recap-table-body');
+            tableBody.innerHTML = '';
+
+            // Remplissage détaillé par enveloppe
+            if (sortedEnvelopes.length === 0) {
+                tableBody.innerHTML = `<div class="text-center text-xs text-slate-400 italic py-4">Aucune enveloppe créée.</div>`;
             } else {
-                document.getElementById('recap-savings').className = "text-4xl md:text-5xl font-black tracking-tight text-rose-600";
-                statusEl.className = "w-full text-xs font-semibold px-4 py-2 rounded-xl bg-rose-50 text-rose-700";
-                statusEl.innerText = "Attention : Vos charges et enveloppes dépassent les fonds du pot commun !";
+                sortedEnvelopes.forEach(e => {
+                    const color = e.color || '#00b4d8';
+                    const overspent = e.spent > e.budget;
+                    
+                    tableBody.innerHTML += `
+                        <div class="grid grid-cols-3 gap-2 items-center text-sm">
+                            <div class="col-span-1 flex items-center gap-2 truncate">
+                                <span class="w-2.5 h-2.5 rounded-full shadow-sm flex-shrink-0" style="background-color: ${color}"></span>
+                                <span class="text-slate-700 font-medium truncate" title="${e.name}">${e.name}</span>
+                            </div>
+                            <div class="text-right text-slate-500">-${e.budget.toFixed(2)} €</div>
+                            <div class="text-right ${overspent ? 'text-rose-600 font-bold bg-rose-50 rounded px-1' : 'text-slate-800 font-medium'}">
+                                -${e.spent.toFixed(2)} €
+                            </div>
+                        </div>
+                    `;
+                });
             }
+
+            // Calculs finaux du Reste à Vivre
+            const restePrev = fondsApresCharges - totalEnvelopesBudget;
+            const resteReel = fondsApresCharges - totalEnvelopesSpent;
+
+            const restePrevEl = document.getElementById('recap-reste-prev');
+            restePrevEl.innerText = restePrev.toFixed(2) + " €";
+            restePrevEl.className = `text-lg md:text-xl font-black tracking-tight ${restePrev >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+
+            const resteReelEl = document.getElementById('recap-reste-reel');
+            resteReelEl.innerText = resteReel.toFixed(2) + " €";
+            resteReelEl.className = `text-lg md:text-xl font-black tracking-tight ${resteReel >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
             // Met à jour la mémoire de l'autocomplétion
             updateAutocompleteData();
