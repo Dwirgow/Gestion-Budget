@@ -91,110 +91,103 @@
         </nav>
 
         <div id="tab-perso" class="tab-content active">
-            <div id="perso-content-screen">
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="space-y-6">
-                        
-                        <div class="grid grid-cols-2 gap-4 items-start">
-                            
-                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 h-full">
-                                <details class="[&_summary::-webkit-details-marker]:hidden group">
-                                    <summary class="font-bold text-slate-900 flex justify-between items-center gap-1 text-sm cursor-pointer outline-none list-none">
-                                        <span class="flex items-center gap-1.5 truncate"><i class="fa-solid fa-wallet text-amber-500"></i> <span class="truncate">Salaire</span></span>
-                                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0"></i>
-                                    </summary>
-                                    <div class="mt-3">
-                                        <div class="flex flex-col gap-2">
-                                            <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-center">
-                                            <button onclick="updatePersonalSalary()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i> Valider</button>
-                                        </div>
-                                    </div>
-                                </details>
+            <div id="perso-content-screen" class="space-y-6">
+                
+                <!-- HAUT : 2 colonnes avec les blocs déroulants -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <!-- GAUCHE : Bloc déroulant "Personnel" -->
+                    <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 uppercase tracking-wider text-sm">
+                                <i class="fa-solid fa-user text-indigo-500"></i> Personnel
                             </div>
-
-                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 h-full">
-                                <details class="[&_summary::-webkit-details-marker]:hidden group">
-                                    <summary class="font-bold text-slate-900 flex justify-between items-center gap-1 text-sm cursor-pointer outline-none list-none">
-                                        <span class="flex items-center gap-1.5 truncate"><i class="fa-solid fa-right-left text-blue-500"></i> <span class="truncate">Versement</span></span>
-                                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0"></i>
-                                    </summary>
-                                    <div class="mt-3">
-                                        <div class="flex flex-col gap-2">
-                                            <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-center">
-                                            <button onclick="updatePersonalContribution()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i> Valider</button>
-                                        </div>
-                                    </div>
-                                </details>
-                            </div>
-                            
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                            <details id="form-perso-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
-                                <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                                    <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-rose-500"></i> Dépense Personnelle</span>
-                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                                </summary>
-                                <div class="space-y-3 mt-4">
-                                    <div>
-                                        <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                                        <datalist id="perso-expenses-datalist"></datalist>
-                                    </div>
-                                    <div>
-                                        <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                                    </div>
-                                    <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
-                                        <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                                            <span>Personnaliser l'apparence</span>
-                                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
-                                        </summary>
-                                        <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
-                                    </details>
-                                    <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">
+                            <!-- Salaire -->
+                            <div>
+                                <label class="block text-xs text-slate-500 font-medium mb-1">Mon Salaire / Revenus</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="perso-salary-input" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm whitespace-nowrap"><i class="fa-solid fa-check"></i></button>
                                 </div>
-                            </details>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-2 space-y-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                            <details class="[&_summary::-webkit-details-marker]:hidden group" open>
-                                <summary class="font-bold text-slate-400 flex justify-between items-center gap-2 text-sm uppercase tracking-wider cursor-pointer outline-none list-none border-b border-slate-100 pb-2 mb-4">
-                                    <span>Mon Récapitulatif Personnel</span>
-                                    <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200 group-open:rotate-180"></i>
-                                </summary>
-                                <div>
-                                    <div class="space-y-3 mb-6">
-                                        <div class="flex justify-between items-center text-sm">
-                                            <span class="text-slate-600">Mon Salaire Net Total :</span>
-                                            <span class="font-bold text-slate-900" id="perso-salary-display">0.00 €</span>
-                                        </div>
-                                        <div class="flex justify-between items-center text-sm">
-                                            <span class="text-rose-600">Ma Part Pot Commun :</span>
-                                            <span class="font-bold text-rose-600" id="perso-contribution-display">-0.00 €</span>
-                                        </div>
-                                        <div class="flex justify-between items-center text-sm">
-                                            <span class="text-rose-600">Total Dépenses Perso :</span>
-                                            <span class="font-bold text-rose-600" id="perso-expenses-display">-0.00 €</span>
-                                        </div>
-                                    </div>
-                                    <div class="bg-slate-50 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Mon Reste à Vivre Perso</span>
-                                        <span class="text-3xl font-black tracking-tight text-emerald-600" id="perso-reste-display">0.00 €</span>
-                                    </div>
-                                </div>
-                            </details>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-end mb-2">
-                                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Mes dépenses 100% personnelles</h2>
-                                <span class="text-xs text-slate-400 italic">Cochez quand remboursé</span>
                             </div>
-                            <div id="perso-expenses-list" class="space-y-2"></div>
+                            <!-- Versement Pot Commun -->
+                            <div>
+                                <label class="block text-xs text-slate-500 font-medium mb-1">Versement vers le compte commun</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="perso-contribution-input" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm whitespace-nowrap"><i class="fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- DROITE : Bloc déroulant "Dépenses" -->
+                    <details id="form-perso-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 uppercase tracking-wider text-sm">
+                                <i class="fa-solid fa-cart-shopping text-rose-500"></i> Dépenses
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                            <div>
+                                <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom de la dépense" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <datalist id="perso-expenses-datalist"></datalist>
+                            </div>
+                            <div>
+                                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                    <span>Personnaliser l'apparence</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                                </summary>
+                                <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
+                            </details>
+                            <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                        </div>
+                    </details>
+
+                </div>
+
+                <!-- MILIEU : Récapitulatif -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-slate-400 flex items-center gap-2 text-sm uppercase tracking-wider border-b border-slate-100 pb-2 mb-4">
+                        Récapitulatif Personnel
+                    </h3>
+                    <!-- Disposition sur une ligne sur grand écran, empilé sur mobile -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                        <div class="text-left">
+                            <div class="text-slate-500 text-xs uppercase tracking-wide">Mon Salaire</div>
+                            <div class="font-bold text-slate-900" id="perso-salary-display">0.00 €</div>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-rose-500 text-xs uppercase tracking-wide">Pot Commun</div>
+                            <div class="font-bold text-rose-600" id="perso-contribution-display">-0.00 €</div>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-rose-500 text-xs uppercase tracking-wide">Dépenses</div>
+                            <div class="font-bold text-rose-600" id="perso-expenses-display">-0.00 €</div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center col-span-2 md:col-span-1">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Reste à Vivre</span>
+                            <span class="text-2xl font-black tracking-tight text-emerald-600" id="perso-reste-display">0.00 €</span>
                         </div>
                     </div>
                 </div>
+
+                <!-- BAS : Liste des dépenses -->
+                <div>
+                    <div class="flex justify-between items-end mb-3">
+                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Mes Dépenses</h2>
+                        <span class="text-xs text-slate-400 italic">Cochez quand passé</span>
+                    </div>
+                    <div id="perso-expenses-list" class="space-y-2"></div>
+                </div>
+
             </div>
         </div>
         <div id="tab-revenus" class="tab-content">
