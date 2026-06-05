@@ -97,24 +97,24 @@
     
     <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
         <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-            <div class="flex items-center gap-1.5 md:gap-2 uppercase tracking-wider text-xs md:text-sm truncate">
+            <div class="flex items-center gap-2 text-base truncate">
                 <i class="fa-solid fa-user text-indigo-500"></i> <span class="truncate">Perso</span>
             </div>
-            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
         </summary>
         <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">
             <div>
-                <label class="block text-[10px] md:text-xs text-slate-500 font-medium mb-1 truncate">Mon Salaire / Revenus</label>
+                <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire / Revenus</label>
                 <div class="flex gap-2">
-                    <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                    <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-3 md:px-4 py-2 md:py-2.5 rounded-xl transition shadow-sm text-xs md:text-sm"><i class="fa-solid fa-check"></i></button>
+                    <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                    <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
                 </div>
             </div>
             <div>
-                <label class="block text-[10px] md:text-xs text-slate-500 font-medium mb-1 truncate">Vers compte commun</label>
+                <label class="text-xs font-bold text-slate-600 block mb-1">Vers compte commun</label>
                 <div class="flex gap-2">
-                    <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                    <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-3 md:px-4 py-2 md:py-2.5 rounded-xl transition shadow-sm text-xs md:text-sm"><i class="fa-solid fa-check"></i></button>
+                    <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                    <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
                 </div>
             </div>
         </div>
@@ -122,27 +122,27 @@
 
     <details id="form-perso-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
         <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-            <div class="flex items-center gap-1.5 md:gap-2 uppercase tracking-wider text-xs md:text-sm truncate">
+            <div class="flex items-center gap-2 text-base truncate">
                 <i class="fa-solid fa-cart-shopping text-rose-500"></i> <span class="truncate">Dépenses personnelles</span>
             </div>
-            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
         </summary>
         <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
             <div>
-                <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                 <datalist id="perso-expenses-datalist"></datalist>
             </div>
             <div>
-                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                <input type="number" id="perso-exp-amount" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
             </div>
-            <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-2 md:p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
-                <summary class="text-[10px] md:text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                    <span>Personnaliser l'apparence</span>
-                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+            <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                    <span>Apparence</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
                 </summary>
-                <div class="pt-2 mt-2 md:pt-3 md:mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
+                <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
             </details>
-            <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs md:text-sm py-2 md:py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+            <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
         </div>
     </details>
 
@@ -150,29 +150,29 @@
 
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit mt-6">
     <summary class="font-bold text-slate-900 p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-        <div class="flex items-center gap-2 uppercase tracking-wider text-sm">
+        <div class="flex items-center gap-2 text-base">
             <i class="fa-solid fa-chart-pie text-emerald-500"></i> Récapitulatif
         </div>
-        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 text-xs"></i>
     </summary>
     
     <div class="p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div>
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider">Salaire</p>
-                <div id="perso-salary-display" class="font-bold text-slate-800">0.00 €</div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Salaire</p>
+                <div id="perso-salary-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
             </div>
             <div>
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider">Contribution</p>
-                <div id="perso-contribution-display" class="font-bold text-rose-500">0.00 €</div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Contribution</p>
+                <div id="perso-contribution-display" class="font-bold text-rose-500 text-sm">0.00 €</div>
             </div>
             <div>
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider">Dépenses</p>
-                <div id="perso-expenses-display" class="font-bold text-slate-800">0.00 €</div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses</p>
+                <div id="perso-expenses-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
             </div>
             <div>
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider">Reste</p>
-                <div id="perso-reste-display" class="text-3xl md:text-4xl font-black tracking-tight mt-1 text-emerald-600">0.00 €</div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reste</p>
+                <div id="perso-reste-display" class="text-3xl md:text-4xl font-black tracking-tight text-emerald-600 mt-1">0.00 €</div>
             </div>
         </div>
     </div>
@@ -187,8 +187,7 @@
                 </div>
 
             </div>
-        </div>
-        <div id="tab-revenus" class="tab-content">
+        </div>        <div id="tab-revenus" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="space-y-6">
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
