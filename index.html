@@ -93,8 +93,7 @@
         <div id="tab-perso" class="tab-content active">
             <div id="perso-content-screen" class="space-y-6">
                 
-                <!-- HAUT : 2 colonnes avec les blocs déroulants -->
-               <div class="grid grid-cols-2 gap-3 md:gap-6 items-start">
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 items-start">
     
     <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
         <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
@@ -124,7 +123,7 @@
     <details id="form-perso-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
         <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
             <div class="flex items-center gap-1.5 md:gap-2 uppercase tracking-wider text-xs md:text-sm truncate">
-                <i class="fa-solid fa-cart-shopping text-rose-500"></i> <span class="truncate">Dépenses</span>
+                <i class="fa-solid fa-cart-shopping text-rose-500"></i> <span class="truncate">Dépenses personnelles</span>
             </div>
             <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0"></i>
         </summary>
@@ -134,11 +133,11 @@
                 <datalist id="perso-expenses-datalist"></datalist>
             </div>
             <div>
-                <input type="number" id="perso-exp-amount" placeholder="€" step="0.01" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-xs md:text-sm p-2 md:p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
             </div>
             <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-2 md:p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
                 <summary class="text-[10px] md:text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                    <span>Apparence</span>
+                    <span>Personnaliser l'apparence</span>
                     <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
                 </summary>
                 <div class="pt-2 mt-2 md:pt-3 md:mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
@@ -149,7 +148,6 @@
 
 </div>
 
-                <!-- MILIEU : Récapitulatif -->
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit mt-6">
     <summary class="font-bold text-slate-900 p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
         <div class="flex items-center gap-2 uppercase tracking-wider text-sm">
@@ -180,7 +178,6 @@
     </div>
 </details>
 
-                <!-- BAS : Liste des dépenses -->
                 <div>
                     <div class="flex justify-between items-end mb-3">
                         <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Mes Dépenses</h2>
@@ -200,15 +197,14 @@
                                 <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Calculateur (Prorata)</span>
                                 <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
                             </summary>
-                            <div class="mt-4 space-y-4">
-                                <p class="text-[10px] text-slate-500 uppercase tracking-wide">Outil local : ces données ne sont pas sauvegardées.</p>
+                            <div class="mt-4 space-y-4">                                
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire</label>
+                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 1</label>
                                         <input type="number" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                     </div>
                                     <div>
-                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire Conjoint(e)</label>
+                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 2</label>
                                         <input type="number" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                     </div>
                                 </div>
@@ -236,8 +232,7 @@
                                 <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter au pot commun</span>
                                 <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
                             </summary>
-                            <div class="space-y-3 mt-4">
-                                <p class="text-xs text-slate-500 mb-2">Ajoutez ici les virements que vous ou votre conjoint(e) faites vers le compte joint pour la synchronisation globale.</p>
+                            <div class="space-y-3 mt-4">                               
                                 <div>
                                     <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                                 </div>
@@ -336,89 +331,90 @@
         </div>
 
         <div id="tab-recap" class="tab-content">
-    <div class="grid md:grid-cols-2 gap-6">
-        <!-- Colonne Gauche : Les totaux globaux (Version compacte) -->
-        <div class="space-y-3"> <!-- Réduction de l'espace entre les blocs (avant: space-y-4) -->
-            
-            <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-100 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-arrow-trend-up"></i></div>
-                    <div>
-                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Fonds Pot Commun</h4>
-                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+                        <details class="[&_summary::-webkit-details-marker]:hidden group" open>
+                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none border-b border-slate-100 pb-3">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500"></i> Prévision</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
+                            </summary>
+                            
+                            <div class="mt-4 space-y-3">
+                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                                        <div>
+                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Fonds Pot Commun</h4>
+                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-building-columns"></i></div>
+                                        <div>
+                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Charges communes</h4>
+                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-basket-shopping"></i></div>
+                                        <div>
+                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Enveloppes (Prévu)</h4>
+                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+                        <div class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base outline-none list-none border-b border-slate-100 pb-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Bilan : Prévu vs Réel</span>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center text-sm mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <span class="text-slate-600 font-medium">Fonds dispo. (après charges) :</span>
+                                <span class="font-bold text-slate-800" id="recap-fonds-base">0.00 €</span>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-2 border-b border-slate-100 mb-3">
+                                <div class="col-span-1">Enveloppes</div>
+                                <div class="text-right">Prévu</div>
+                                <div class="text-right">Réel (Dépensé)</div>
+                            </div>
+
+                            <div id="recap-table-body" class="space-y-3 min-h-[100px]">
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t-2 border-slate-100 items-end">
+                                <div class="col-span-1 text-xs font-bold text-slate-800 uppercase tracking-wide leading-tight">
+                                    Reste à<br>Vivre
+                                </div>
+                                <div class="text-right flex flex-col">
+                                    <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Prévu</span>
+                                    <span class="text-lg md:text-xl font-black" id="recap-reste-prev">0.00 €</span>
+                                </div>
+                                <div class="text-right flex flex-col">
+                                    <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Réel</span>
+                                    <span class="text-lg md:text-xl font-black" id="recap-reste-reel">0.00 €</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-100 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-building-columns"></i></div>
-                    <div>
-                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Charges communes</h4>
-                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-100 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-basket-shopping"></i></div>
-                    <div>
-                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Enveloppes (Prévu)</h4>
-                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
-                    </div>
-                </div>
-            </div>
-            
         </div>
-
-        <!-- Colonne Droite : Le Volet Unique "Tableau Prévu VS Réel" -->
-        <div class="space-y-4">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
-                <details class="[&_summary::-webkit-details-marker]:hidden group" open>
-                    <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none border-b border-slate-100 pb-3">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Bilan : Prévu vs Réel</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                    </summary>
-                    
-                    <div class="mt-4">
-                        <!-- Ligne de base -->
-                        <div class="flex justify-between items-center text-sm mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
-                            <span class="text-slate-600 font-medium">Fonds dispo. (après charges) :</span>
-                            <span class="font-bold text-slate-800" id="recap-fonds-base">0.00 €</span>
-                        </div>
-
-                        <!-- En-tête du tableau -->
-                        <div class="grid grid-cols-3 gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-2 border-b border-slate-100 mb-3">
-                            <div class="col-span-1">Enveloppes</div>
-                            <div class="text-right">Prévu</div>
-                            <div class="text-right">Réel (Dépensé)</div>
-                        </div>
-
-                        <!-- Lignes du tableau injectées par JS -->
-                        <div id="recap-table-body" class="space-y-3 min-h-[100px]">
-                        </div>
-
-                        <!-- Pied du tableau : Reste à vivre -->
-                        <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t-2 border-slate-100 items-end">
-                            <div class="col-span-1 text-xs font-bold text-slate-800 uppercase tracking-wide leading-tight">
-                                Reste à<br>Vivre
-                            </div>
-                            <div class="text-right flex flex-col">
-                                <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Prévu</span>
-                                <span class="text-lg md:text-xl font-black" id="recap-reste-prev">0.00 €</span>
-                            </div>
-                            <div class="text-right flex flex-col">
-                                <span class="text-[10px] text-slate-400 uppercase font-bold mb-0.5">Réel</span>
-                                <span class="text-lg md:text-xl font-black" id="recap-reste-reel">0.00 €</span>
-                            </div>
-                        </div>
-                    </div>
-                </details>
-            </div>
-        </div>
-    </div>
-</div>
 
     <div id="app-modal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-50 p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300 overflow-y-auto">
         <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl transform transition-transform scale-95 duration-300 my-auto" id="app-modal-content">
@@ -437,9 +433,6 @@
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // ==========================================
-        // 🛠️ CONFIGURATION FIREBASE (Pot Commun)
-        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDey4gi4wbmlWO4TTrTjp-BxWLHe75pkMc",
             authDomain: "gestion-budget-96615.firebaseapp.com",
@@ -453,8 +446,6 @@
         firebase.initializeApp(firebaseConfig);
         let dbRef = firebase.database().ref('budgets/notre_budget_secret_123');
 
-        // NOUVELLE PALETTE DE COULEURS BIEN DISTINCTES
-        // Cramoisi, Orange vif, Jaune or, Vert sapin, Menthe/Teal, Bleu ciel, Bleu marine, Violet, Rose fuchsia, Noir/Ardoise
         const COLORS = ['#d90429', '#fb8500', '#ffb703', '#2b9348', '#06d6a0', '#00b4d8', '#03045e', '#7209b7', '#f72585', '#1f2937'];
         const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar', 'fa-user-tie', 'fa-mobile-screen'];
 
@@ -465,21 +456,19 @@
             modal: { icon: '', color: '' }
         };
 
-        // 1. BASE DE DONNÉES CLOUD (Partagée)
         let db = {
             revenus: [],
             expenses: [],
-            envelopes: []
+            envelopes: [],
+            prorata: { sal1: '', sal2: '', besoin: '' }
         };
 
-        // 2. BASE DE DONNÉES LOCALE (Uniquement sur ce téléphone)
         let localDb = {
             personalSalary: 0,
             personalContribution: 0,
             personalExpenses: []
         };
 
-        // Récupérer les données locales sauvegardées dans le navigateur
         const savedLocalData = localStorage.getItem('budgetApp_localData');
         if (savedLocalData) {
             try {
@@ -491,7 +480,6 @@
             }
         }
 
-        // Écouter les données du pot commun depuis Firebase
         dbRef.on('value', (snapshot) => {
             const cloudData = snapshot.val();
             if (cloudData) {
@@ -499,32 +487,30 @@
                 if (!db.revenus) db.revenus = [];
                 if (!db.expenses) db.expenses = [];
                 if (!db.envelopes) db.envelopes = [];
+                if (!db.prorata) db.prorata = { sal1: '', sal2: '', besoin: '' };
             } else {
-                // Initialisation par défaut si la DB est vide
                 db = {
                     revenus: [{ id: 1, name: "Virement compte commun", amount: 1500 }],
                     expenses: [{ id: 2, name: "Loyer", amount: 700, paid: false, icon: 'fa-house', color: '#03045e' }],
-                    envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#00b4d8", icon: 'fa-basket-shopping' }]
+                    envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#00b4d8", icon: 'fa-basket-shopping' }],
+                    prorata: { sal1: '', sal2: '', besoin: '' }
                 };
                 saveToFirebase();
             }
             renderAll();
         });
 
-        // Fonction de sauvegarde CLOUD (Pot Commun)
         function saveToFirebase() {
             if (dbRef) {
                 dbRef.set(db).catch(err => showToast("Erreur de sauvegarde Cloud", true));
             }
         }
 
-        // Fonction de sauvegarde LOCALE (Espace Perso)
         function saveToLocal() {
             localStorage.setItem('budgetApp_localData', JSON.stringify(localDb));
-            renderAll(); // Rendu manuel car Firebase ne déclenchera pas l'event
+            renderAll(); 
         }
 
-        // --- GÉNÉRATION DE L'INTERFACE DES SÉLECTEURS ---
         function createPickerHTML(prefix, selectedIcon, selectedColor) {
             let iconsHtml = ICONS.map(icon =>
                 `<button type="button" onclick="selectIcon('${prefix}', '${icon}')" class="w-[40px] h-[40px] rounded-lg flex items-center justify-center border-2 ${selectedIcon === icon ? 'border-slate-800 bg-slate-200' : 'border-transparent hover:bg-slate-200'} transition"><i class="fa-solid ${icon} text-slate-700 text-xl"></i></button>`
@@ -655,16 +641,13 @@
             closeModal();
         });
 
-        // --- AUTO-COMPLÉTION INTELLIGENTE ---
         let expenseHistory = {};
         let persoHistory = {};
 
         function updateAutocompleteData() {
-            // Mémorise la dernière version de chaque dépense
             if (db.expenses) db.expenses.forEach(e => { expenseHistory[e.name] = e; });
             if (localDb.personalExpenses) localDb.personalExpenses.forEach(e => { persoHistory[e.name] = e; });
 
-            // Remplit les listes déroulantes cachées du navigateur
             const expList = document.getElementById('common-expenses-list');
             if(expList) expList.innerHTML = Object.keys(expenseHistory).map(name => `<option value="${name}">`).join('');
 
@@ -680,15 +663,12 @@
             const val = nameInput.value.trim();
             if (history[val]) {
                 const pastExp = history[val];
-                // Pré-remplit le montant uniquement si la case est vide
                 if (amountInput.value === '') amountInput.value = pastExp.amount;
-                // Applique instantanément la couleur et l'icône habituelles
                 if (pastExp.icon) selectIcon(type, pastExp.icon);
                 if (pastExp.color) selectColor(type, pastExp.color);
             }
         }
 
-        // --- FONCTIONS COMMUNES D'ÉDITION ---
         function editName(type, id) {
             const isLocal = type === 'personalExpenses';
             const targetDb = isLocal ? localDb : db;
@@ -773,7 +753,6 @@
             });
         }
 
-        // --- ACTIONS SUR LE CLOUD ---
         function addRevenue() {
             const name = document.getElementById('rev-name').value.trim();
             const amount = parseFloat(document.getElementById('rev-amount').value);
@@ -834,12 +813,10 @@
         function resetMonthExpenses() {
             openModal({ title: "Nouveau mois", desc: "Remettre les dépenses à 0€, décocher les charges communes et supprimer les dépenses perso ?", confirmText: "Oui, réinitialiser" }, (confirm) => {
                 if (confirm) {
-                    // Remise à zéro Cloud
                     if (db.envelopes) db.envelopes.forEach(e => e.spent = 0);
                     if (db.expenses) db.expenses.forEach(e => e.paid = false);
                     saveToFirebase();
                     
-                    // Remise à zéro Locale (Dépenses perso)
                     localDb.personalExpenses = [];
                     saveToLocal();
                     
@@ -848,7 +825,6 @@
             });
         }
 
-        // --- ACTIONS LOCALES (Personnel) ---
         function updatePersonalSalary() {
             const amount = parseFloat(document.getElementById('perso-salary-input').value);
             if (!isNaN(amount) && amount >= 0) {
@@ -875,7 +851,6 @@
             const name = document.getElementById('perso-exp-name').value.trim();
             const amount = parseFloat(document.getElementById('perso-exp-amount').value);
             if (name && !isNaN(amount) && amount > 0) {
-                // Ajout de "paid: false" pour les dépenses perso
                 localDb.personalExpenses.push({ id: Date.now(), name, amount, icon: formStates.persoExp.icon, color: formStates.persoExp.color, paid: false });
                 document.getElementById('perso-exp-name').value = '';
                 document.getElementById('perso-exp-amount').value = '';
@@ -889,17 +864,14 @@
             } else { showToast("Champ invalide", true); }
         }
 
-        // Coche/Décoche une dépense perso
         function togglePersonalExpensePaid(id) {
             const exp = localDb.personalExpenses.find(e => e.id === id);
             if (exp) { exp.paid = !exp.paid; saveToLocal(); }
         }
 
-        // --- RENDU UI ---
         function renderAll() {
             let totalRevenues = 0, totalExpenses = 0, totalEnvelopesBudget = 0, totalEnvelopesSpent = 0, totalPersonalExpenses = 0;
 
-            // Rendu Revenus (CLOUD)
             const revList = document.getElementById('revenues-list');
             revList.innerHTML = '';
             db.revenus.forEach(r => {
@@ -917,11 +889,11 @@
                     </div>`;
             });
 
-            // Rendu Dépenses Perso (LOCAL)
             const persoExpList = document.getElementById('perso-expenses-list');
             persoExpList.innerHTML = '';
             
             const sortedPersoExpenses = [...localDb.personalExpenses].sort((a, b) => {
+                if (a.paid !== b.paid) return a.paid ? 1 : -1;
                 return COLORS.indexOf(a.color || '#7209b7') - COLORS.indexOf(b.color || '#7209b7');
             });
             
@@ -947,7 +919,6 @@
                     </div>`;
             });
 
-            // Mise à jour Recap Personnel (100% LOCAL)
             document.getElementById('perso-salary-display').innerText = (localDb.personalSalary || 0).toFixed(2) + " €";
             document.getElementById('perso-salary-input').value = localDb.personalSalary || '';
             
@@ -961,10 +932,11 @@
             persoRestEl.innerText = restePerso.toFixed(2) + " €";
             persoRestEl.className = `text-3xl md:text-4xl font-black tracking-tight mt-1 ${restePerso >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            // Rendu Charges Communes (CLOUD)
             const expList = document.getElementById('expenses-list');
             expList.innerHTML = '';
+            
             const sortedExpenses = [...db.expenses].sort((a, b) => {
+                if (a.paid !== b.paid) return a.paid ? 1 : -1;
                 return COLORS.indexOf(a.color || '#1f2937') - COLORS.indexOf(b.color || '#1f2937');
             });
             
@@ -990,7 +962,6 @@
                     </div>`;
             });
 
-            // Rendu Enveloppes (CLOUD)
             const envList = document.getElementById('envelopes-list');
             envList.innerHTML = '';
             let currentPercent = 0;
@@ -1058,25 +1029,17 @@
             document.getElementById('env-donut').style.background = `conic-gradient(${gradientSegments.join(', ')})`;
             const envRemaining = Math.max(0, totalEnvelopesBudget - totalEnvelopesSpent);
             document.getElementById('env-donut-text').innerText = envRemaining.toFixed(0) + "€";
-
-            // ==========================================
-            // Mise à jour Recap Commun (CLOUD) - Tableau Prévu vs Réel
-            // ==========================================
             
-            // Mise à jour des cartes de gauche
             document.getElementById('recap-total-revenues').innerText = totalRevenues.toFixed(2) + " €";
             document.getElementById('recap-total-expenses').innerText = totalExpenses.toFixed(2) + " €";
             document.getElementById('recap-total-envelopes').innerText = totalEnvelopesBudget.toFixed(2) + " €";
 
-            // Calcul de la base de départ : Pot commun - Charges fixes
             const fondsApresCharges = totalRevenues - totalExpenses;
             document.getElementById('recap-fonds-base').innerText = fondsApresCharges.toFixed(2) + " €";
 
-            // Nettoyage du tableau
             const tableBody = document.getElementById('recap-table-body');
             tableBody.innerHTML = '';
 
-            // Remplissage détaillé par enveloppe
             if (sortedEnvelopes.length === 0) {
                 tableBody.innerHTML = `<div class="text-center text-xs text-slate-400 italic py-4">Aucune enveloppe créée.</div>`;
             } else {
@@ -1099,7 +1062,6 @@
                 });
             }
 
-            // Calculs finaux du Reste à Vivre
             const restePrev = fondsApresCharges - totalEnvelopesBudget;
             const resteReel = fondsApresCharges - totalEnvelopesSpent;
 
@@ -1111,14 +1073,39 @@
             resteReelEl.innerText = resteReel.toFixed(2) + " €";
             resteReelEl.className = `text-lg md:text-xl font-black tracking-tight ${resteReel >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            // Met à jour la mémoire de l'autocomplétion
+            // --- Restauration UI du prorata (Cloud) ---
+            if (document.activeElement !== document.getElementById('calc-sal-1') && 
+                document.activeElement !== document.getElementById('calc-sal-2') && 
+                document.activeElement !== document.getElementById('calc-besoin')) {
+                document.getElementById('calc-sal-1').value = db.prorata?.sal1 || '';
+                document.getElementById('calc-sal-2').value = db.prorata?.sal2 || '';
+                document.getElementById('calc-besoin').value = db.prorata?.besoin || '';
+            }
+            refreshProrataUI(); 
+
             updateAutocompleteData();
         }
-        // --- CALCULATEUR DE PRORATA ---
+        
         function calculateProrata() {
-            const s1 = parseFloat(document.getElementById('calc-sal-1').value) || 0;
-            const s2 = parseFloat(document.getElementById('calc-sal-2').value) || 0;
-            const besoin = parseFloat(document.getElementById('calc-besoin').value) || 0;
+            const s1Input = document.getElementById('calc-sal-1').value;
+            const s2Input = document.getElementById('calc-sal-2').value;
+            const besoinInput = document.getElementById('calc-besoin').value;
+
+            // Sauvegarde dans Firebase
+            db.prorata = {
+                sal1: s1Input,
+                sal2: s2Input,
+                besoin: besoinInput
+            };
+            saveToFirebase();
+    
+            refreshProrataUI();
+        }
+
+        function refreshProrataUI() {
+            const s1 = parseFloat(db.prorata?.sal1) || 0;
+            const s2 = parseFloat(db.prorata?.sal2) || 0;
+            const besoin = parseFloat(db.prorata?.besoin) || 0;
             const resDiv = document.getElementById('prorata-result');
 
             if (s1 > 0 && s2 > 0 && besoin > 0) {
@@ -1127,16 +1114,14 @@
                 const part2 = (s2 / totalSal) * besoin;
                 const pct1 = Math.round((s1 / totalSal) * 100);
                 const pct2 = Math.round((s2 / totalSal) * 100);
-                
+        
                 document.getElementById('calc-part-1').innerText = part1.toFixed(2) + " € (" + pct1 + "%)";
                 document.getElementById('calc-part-2').innerText = part2.toFixed(2) + " € (" + pct2 + "%)";
                 resDiv.classList.remove('hidden');
             } else {
                 resDiv.classList.add('hidden');
             }
-        }
-            
-        // Enregistrement du Service Worker pour permettre l'installation PWA
+        }            
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
