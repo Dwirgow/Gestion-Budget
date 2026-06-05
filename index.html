@@ -728,7 +728,21 @@
                 if (newValStr) {
                     const newVal = parseFloat(newValStr.toString().replace(',', '.'));
                     if (!isNaN(newVal) && newVal >= 0) {
+                        const diff = newVal - env.spent;
                         env.spent = newVal;
+                        
+                        // Ajout de la correction dans l'historique
+                        if (diff !== 0) {
+                            if (!env.history) env.history = [];
+                            const now = new Date();
+                            const dateStr = now.toLocaleDateString('fr-FR');
+                            env.history.push({
+                                id: Date.now(),
+                                amount: diff,
+                                date: dateStr + ' (Correction)'
+                            });
+                        }
+
                         saveToFirebase();
                         showToast("Dépense corrigée");
                     } else { showToast("Montant invalide", true); }
@@ -782,7 +796,7 @@
             const name = document.getElementById('env-name').value.trim();
             const budget = parseFloat(document.getElementById('env-budget').value);
             if (name && !isNaN(budget) && budget > 0) {
-                db.envelopes.push({ id: Date.now(), name, budget, spent: 0, icon: formStates.env.icon, color: formStates.env.color });
+                db.envelopes.push({ id: Date.now(), name, budget, spent: 0, history: [], icon: formStates.env.icon, color: formStates.env.color });
                 document.getElementById('env-name').value = ''; document.getElementById('env-budget').value = '';
                 document.getElementById('form-envelope-toggle').removeAttribute('open');
                 const details = document.getElementById('env-appearance-details');
@@ -803,16 +817,43 @@
             const env = db.envelopes.find(e => e.id === id);
             if (!isNaN(amount) && amount > 0 && env) {
                 env.spent += amount;
+                
+                // Ajout à l'historique
+                if (!env.history) env.history = [];
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+                
+                env.history.push({
+                    id: Date.now(),
+                    amount: amount,
+                    date: dateStr
+                });
+
                 input.value = '';
                 saveToFirebase();
                 showToast("Dépense enregistrée");
             } else { showToast("Montant invalide", true); }
         }
 
+        // Nouvelle fonction pour supprimer une dépense de l'historique d'une enveloppe
+        function deleteEnvelopeHistoryItem(envId, historyId) {
+            const env = db.envelopes.find(e => e.id === envId);
+            if (env && env.history) {
+                const itemIndex = env.history.findIndex(h => h.id === historyId);
+                if (itemIndex > -1) {
+                    const item = env.history[itemIndex];
+                    env.spent = Math.max(0, env.spent - item.amount);
+                    env.history.splice(itemIndex, 1);
+                    saveToFirebase();
+                    showToast("Dépense supprimée de l'historique");
+                }
+            }
+        }
+
         function resetMonthExpenses() {
             openModal({ title: "Nouveau mois", desc: "Remettre les dépenses à 0€, décocher les charges communes et supprimer les dépenses perso ?", confirmText: "Oui, réinitialiser" }, (confirm) => {
                 if (confirm) {
-                    if (db.envelopes) db.envelopes.forEach(e => e.spent = 0);
+                    if (db.envelopes) db.envelopes.forEach(e => { e.spent = 0; e.history = []; }); // On vide l'historique
                     if (db.expenses) db.expenses.forEach(e => e.paid = false);
                     saveToFirebase();
                     
@@ -1006,6 +1047,25 @@
                                 <button onclick="manualSpend(${e.id})" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-3 py-2 rounded-lg transition shadow-sm">OK</button>
                             </div>
                         </div>
+                        ${e.history && e.history.length > 0 ? `
+                        <details class="mt-4 border-t border-slate-100 pt-3 group/hist [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="text-[11px] font-bold text-slate-400 uppercase tracking-wider cursor-pointer flex justify-between items-center outline-none">
+                                <span>Historique des dépenses</span>
+                                <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open/hist:rotate-180"></i>
+                            </summary>
+                            <div class="mt-3 space-y-2 max-h-40 overflow-y-auto pr-1">
+                                ${e.history.slice().reverse().map(h => `
+                                    <div class="flex justify-between items-center text-sm bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                        <span class="text-slate-400 text-[10px] font-medium">${h.date || ''}</span>
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-bold ${h.amount > 0 ? 'text-slate-700' : 'text-emerald-600'}">${h.amount > 0 ? '+' : ''}${h.amount.toFixed(2)} €</span>
+                                            <button onclick="deleteEnvelopeHistoryItem(${e.id}, ${h.id})" class="text-slate-300 hover:text-rose-500 transition" title="Supprimer cette dépense"><i class="fa-solid fa-xmark text-sm"></i></button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </details>
+                        ` : ''}
                     </div>`;
             });
 
