@@ -199,11 +199,15 @@
                                 <div id="perso-contribution-display" class="font-bold text-rose-500 text-sm">0.00 €</div>
                             </div>
                             <div>
-                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses</p>
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses (Total)</p>
                                 <div id="perso-expenses-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
                             </div>
                             <div>
-                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reste</p>
+                                <p class="text-[10px] md:text-xs font-bold text-rose-500 uppercase tracking-wider mb-1">À rembourser</p>
+                                <div id="perso-arembourser-display" class="font-bold text-rose-600 text-sm">0.00 €</div>
+                            </div>
+                            <div class="col-span-2 pt-3 mt-1 border-t border-slate-100">
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reste à vivre</p>
                                 <div id="perso-reste-display" class="text-2xl md:text-3xl font-black tracking-tight text-emerald-600 mt-1">0.00 €</div>
                             </div>
                         </div>
@@ -1009,6 +1013,7 @@
 
         function renderAll() {
             let totalRevenues = 0, totalExpenses = 0, totalEnvelopesBudget = 0, totalEnvelopesSpent = 0, totalPersonalExpenses = 0;
+            let unpaidPersonalExpenses = 0;
 
             const revList = document.getElementById('revenues-list');
             revList.innerHTML = '';
@@ -1037,6 +1042,7 @@
             
             sortedPersoExpenses.forEach(e => {
                 totalPersonalExpenses += e.amount;
+                if (!e.paid) unpaidPersonalExpenses += e.amount;
                 const isPaid = e.paid === true;
                 const color = e.color || '#7209b7';
                 const icon = e.icon || 'fa-user-tie';
@@ -1064,6 +1070,10 @@
             document.getElementById('perso-contribution-input').value = localDb.personalContribution || '';
             
             document.getElementById('perso-expenses-display').innerText = "-" + totalPersonalExpenses.toFixed(2) + " €";
+            const arembourserEl = document.getElementById('perso-arembourser-display');
+            if (arembourserEl) {
+                arembourserEl.innerText = unpaidPersonalExpenses.toFixed(2) + " €";
+            }
             
             const restePerso = (localDb.personalSalary || 0) - (localDb.personalContribution || 0) - totalPersonalExpenses;
             const persoRestEl = document.getElementById('perso-reste-display');
