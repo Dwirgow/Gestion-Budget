@@ -53,9 +53,7 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 antialiased font-sans pb-12">
-
-    <div id="auth-screen" class="fixed inset-0 bg-slate-100 z-[100] flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen text-slate-800 antialiased font-sans pb-20"> <div id="auth-screen" class="fixed inset-0 bg-slate-100 z-[100] flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-200">
             <div class="flex justify-center mb-6">
                 <div class="bg-indigo-600 text-white w-16 h-16 flex items-center justify-center rounded-2xl shadow-sm">
@@ -81,6 +79,10 @@
             </div>
         </div>
     </div>
+
+    <button onclick="openQuickAdd()" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-indigo-600 text-white w-14 h-14 rounded-full shadow-lg hover:bg-indigo-700 hover:scale-105 transition-all flex items-center justify-center text-2xl z-40" title="Ajout rapide">
+        <i class="fa-solid fa-plus"></i>
+    </button>
 
     <div class="max-w-4xl mx-auto px-4 pt-6">
         <header class="bg-white rounded-xl md:rounded-2xl p-3 md:p-6 shadow-sm border border-slate-100 mb-4 flex items-center justify-between gap-3">
@@ -138,14 +140,14 @@
                             <div>
                                 <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire</label>
                                 <div class="flex gap-2">
-                                    <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <input type="number" inputmode="decimal" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                                     <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
                                 </div>
                             </div>
                             <div>
                                 <label class="text-xs font-bold text-slate-600 block mb-1">Vers compte commun</label>
                                 <div class="flex gap-2">
-                                    <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <input type="number" inputmode="decimal" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                                     <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
                                 </div>
                             </div>
@@ -160,12 +162,17 @@
                             <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
                         </summary>
                         <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                            <div class="flex gap-2 mb-1 overflow-x-auto hide-scrollbar pb-1">
+                                <button type="button" onclick="applyTag('persoExp', 'Shopping', 'fa-bag-shopping', '#7209b7')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-bag-shopping text-[#7209b7] mr-1"></i>Shopping</button>
+                                <button type="button" onclick="applyTag('persoExp', 'Resto', 'fa-utensils', '#f72585')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-utensils text-[#f72585] mr-1"></i>Resto</button>
+                                <button type="button" onclick="applyTag('persoExp', 'Essence', 'fa-car', '#fb8500')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-car text-[#fb8500] mr-1"></i>Essence</button>
+                            </div>
                             <div>
                                 <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                                 <datalist id="perso-expenses-datalist"></datalist>
                             </div>
                             <div>
-                                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <input type="number" inputmode="decimal" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             </div>
                             <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
                                 <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
@@ -240,16 +247,16 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 1</label>
-                                    <input type="number" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                    <input type="number" inputmode="decimal" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                 </div>
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 2</label>
-                                    <input type="number" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                    <input type="number" inputmode="decimal" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                 </div>
                             </div>
                             <div>
                                 <label class="text-xs font-bold text-slate-600 block mb-1">Besoin total du Pot Commun</label>
-                                <input type="number" id="calc-besoin" placeholder="Total des charges + enveloppes (€)" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                                <input type="number" inputmode="decimal" id="calc-besoin" placeholder="Total des charges + enveloppes (€)" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                             </div>
                             <div id="prorata-result" class="hidden bg-indigo-50 p-4 rounded-xl text-sm border border-indigo-100">
                                 <div class="flex justify-between items-center mb-2 border-b border-indigo-100 pb-2">
@@ -276,7 +283,7 @@
                                 <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             </div>
                             <div>
-                                <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <input type="number" inputmode="decimal" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             </div>
                             <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
                         </div>
@@ -302,12 +309,17 @@
                         <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
                     </summary>
                     <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                        <div class="flex gap-2 mb-1 overflow-x-auto hide-scrollbar pb-1">
+                            <button type="button" onclick="applyTag('exp', 'Loyer', 'fa-house', '#03045e')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-house text-[#03045e] mr-1"></i>Loyer</button>
+                            <button type="button" onclick="applyTag('exp', 'Électricité', 'fa-bolt', '#ffb703')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-bolt text-[#ffb703] mr-1"></i>Élec.</button>
+                            <button type="button" onclick="applyTag('exp', 'Internet', 'fa-globe', '#00b4d8')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-globe text-[#00b4d8] mr-1"></i>Internet</button>
+                        </div>
                         <div>
                             <input type="text" id="exp-name" list="common-expenses-list" oninput="checkAutoFill('exp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                             <datalist id="common-expenses-list"></datalist>
                         </div>
                         <div>
-                            <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            <input type="number" inputmode="decimal" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                         </div>
                         <details id="exp-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
                             <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
@@ -341,11 +353,15 @@
                         <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
                     </summary>
                     <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                        <div class="flex gap-2 mb-1 overflow-x-auto hide-scrollbar pb-1">
+                            <button type="button" onclick="applyTag('env', 'Courses', 'fa-basket-shopping', '#00b4d8')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-basket-shopping text-[#00b4d8] mr-1"></i>Courses</button>
+                            <button type="button" onclick="applyTag('env', 'Loisirs', 'fa-champagne-glasses', '#f72585')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-lg transition whitespace-nowrap"><i class="fa-solid fa-champagne-glasses text-[#f72585] mr-1"></i>Loisirs</button>
+                        </div>
                         <div>
                             <input type="text" id="env-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                         </div>
                         <div>
-                            <input type="number" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            <input type="number" inputmode="decimal" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
                         </div>
                         <details id="env-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
                             <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
@@ -476,11 +492,54 @@
             <h3 id="modal-title" class="font-bold text-lg text-slate-800 mb-2">Titre</h3>
             <p id="modal-desc" class="text-sm text-slate-500 mb-4 hidden">Description</p>
             <input type="text" id="modal-input-text" class="w-full p-3 border border-slate-200 rounded-xl mb-4 focus:outline-none focus:border-indigo-500 hidden">
-            <input type="number" id="modal-input-number" step="0.01" class="w-full p-3 border border-slate-200 rounded-xl mb-4 focus:outline-none focus:border-indigo-500 hidden">
+            <input type="number" inputmode="decimal" id="modal-input-number" step="0.01" class="w-full p-3 border border-slate-200 rounded-xl mb-4 focus:outline-none focus:border-indigo-500 hidden">
             <div id="modal-input-appearance" class="hidden w-full mb-4"></div>
             <div class="flex gap-3 justify-end mt-2">
                 <button onclick="closeModal()" class="px-4 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition font-medium text-sm">Annuler</button>
                 <button id="modal-confirm-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition font-medium text-sm">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quick-add-modal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-50 p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300 overflow-y-auto">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl transform transition-transform scale-95 duration-300 my-auto" id="quick-add-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2"><i class="fa-solid fa-bolt text-indigo-500"></i> Ajout Rapide</h3>
+                <button onclick="closeQuickAdd()" class="text-slate-400 hover:text-rose-500 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs font-bold text-slate-600 block mb-1">Où imputer la dépense ?</label>
+                    <select id="qa-type" onchange="updateQATargets()" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                        <option value="env">Dans une enveloppe</option>
+                        <option value="perso">Dépense personnelle</option>
+                        <option value="exp">Charge commune</option>
+                    </select>
+                </div>
+                
+                <div id="qa-env-target-container">
+                    <label class="text-xs font-bold text-slate-600 block mb-1">Quelle enveloppe ?</label>
+                    <select id="qa-env-id" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                        </select>
+                </div>
+
+                <div id="qa-name-container">
+                    <input type="text" id="qa-name" placeholder="Nom de la dépense" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <input type="number" inputmode="decimal" id="qa-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div id="qa-tags-container" class="pt-2">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Pré-remplissage rapide</label>                    <div class="flex flex-wrap gap-2">
+                        <button onclick="applyQATag('Courses', 'fa-basket-shopping', '#00b4d8')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5"><i class="fa-solid fa-basket-shopping text-[#00b4d8]"></i> Courses</button>
+                        <button onclick="applyQATag('Essence', 'fa-car', '#fb8500')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5"><i class="fa-solid fa-car text-[#fb8500]"></i> Essence</button>
+                        <button onclick="applyQATag('Resto', 'fa-utensils', '#f72585')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5"><i class="fa-solid fa-utensils text-[#f72585]"></i> Resto</button>
+                    </div>
+                </div>
+
+                <button onclick="submitQuickAdd()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition shadow-md mt-2">Valider</button>
             </div>
         </div>
     </div>
@@ -501,7 +560,7 @@
         firebase.initializeApp(firebaseConfig);
         
         const COLORS = ['#d90429', '#fb8500', '#ffb703', '#2b9348', '#06d6a0', '#00b4d8', '#03045e', '#7209b7', '#f72585', '#1f2937'];
-        const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar', 'fa-user-tie', 'fa-mobile-screen'];
+        const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar', 'fa-user-tie', 'fa-mobile-screen', 'fa-globe'];
 
         let formStates = {
             exp: { icon: 'fa-file-invoice-dollar', color: '#1f2937' },
@@ -541,17 +600,13 @@
         const authPassword = document.getElementById('auth-password');
         const authError = document.getElementById('auth-error');
 
-        // Écouteur d'état de connexion : s'exécute automatiquement au lancement et lors d'une connexion/déconnexion
         auth.onAuthStateChanged(user => {
             if (user) {
-                // L'utilisateur est connecté ! On cache l'écran de connexion.
                 authScreen.classList.add('hidden');
                 
-                // On pointe la base de données vers SON identifiant unique
                 if (dbRef) dbRef.off(); 
                 dbRef = firebase.database().ref('budgets/' + user.uid);
                 
-                // On charge ses données (comme avant)
                 dbRef.on('value', (snapshot) => {
                     const cloudData = snapshot.val();
                     if (cloudData) {
@@ -572,13 +627,11 @@
                     renderAll();
                 });
             } else {
-                // Pas d'utilisateur (ou déconnecté) : on affiche l'écran de connexion
                 authScreen.classList.remove('hidden');
-                if (dbRef) dbRef.off(); // On arrête d'écouter la base de données
+                if (dbRef) dbRef.off(); 
             }
         });
 
-        // Fonctions liées aux boutons de l'interface de connexion
         function handleLogin() {
             authError.classList.add('hidden');
             auth.signInWithEmailAndPassword(authEmail.value, authPassword.value)
@@ -613,6 +666,131 @@
         function saveToLocal() {
             localStorage.setItem('budgetApp_localData', JSON.stringify(localDb));
             renderAll(); 
+        }
+
+        // --- NOUVEAUTÉ : Tags Rapides ---
+        function applyTag(type, name, icon, color) {
+            let nameId, amtId;
+            if (type === 'exp') { nameId = 'exp-name'; amtId = 'exp-amount'; }
+            else if (type === 'env') { nameId = 'env-name'; amtId = 'env-budget'; }
+            else if (type === 'persoExp') { nameId = 'perso-exp-name'; amtId = 'perso-exp-amount'; }
+            
+            const nameInput = document.getElementById(nameId);
+            if(nameInput) nameInput.value = name;
+            
+            selectIcon(type, icon);
+            selectColor(type, color);
+            
+            const amtInput = document.getElementById(amtId);
+            if(amtInput) setTimeout(() => amtInput.focus(), 50);
+        }
+
+        // --- NOUVEAUTÉ : Ajout Rapide (FAB Modal) ---
+        let qaIcon = 'fa-basket-shopping';
+        let qaColor = '#00b4d8';
+
+        function openQuickAdd() {
+            const modal = document.getElementById('quick-add-modal');
+            const content = document.getElementById('quick-add-content');
+            updateQATargets();
+            
+            // Valeurs par défaut
+            document.getElementById('qa-name').value = '';
+            document.getElementById('qa-amount').value = '';
+            qaIcon = 'fa-basket-shopping';
+            qaColor = '#00b4d8';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+                document.getElementById('qa-amount').focus();
+            });
+        }
+
+        function closeQuickAdd() {
+            const modal = document.getElementById('quick-add-modal');
+            const content = document.getElementById('quick-add-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function updateQATargets() {
+            const type = document.getElementById('qa-type').value;
+            const envContainer = document.getElementById('qa-env-target-container');
+            const nameContainer = document.getElementById('qa-name-container');
+            const tagsContainer = document.getElementById('qa-tags-container');
+
+            if (type === 'env') {
+                // Mode Enveloppe : on affiche le sélecteur, on cache le nom et les tags
+                envContainer.classList.remove('hidden');
+                nameContainer.classList.add('hidden');
+                if(tagsContainer) tagsContainer.classList.add('hidden');
+                
+                const select = document.getElementById('qa-env-id');
+                if (!db.envelopes || db.envelopes.length === 0) {
+                    select.innerHTML = `<option disabled selected>Aucune enveloppe dispo</option>`;
+                } else {
+                    select.innerHTML = db.envelopes.map(e => `<option value="${e.id}">${e.name} (${(e.budget - e.spent).toFixed(2)}€ restants)</option>`).join('');
+                }
+            } else {
+                // Autres modes : on cache le sélecteur, on affiche le nom et les tags
+                envContainer.classList.add('hidden');
+                nameContainer.classList.remove('hidden');
+                if(tagsContainer) tagsContainer.classList.remove('hidden');
+            }
+        }
+
+        function applyQATag(name, icon, color) {
+            document.getElementById('qa-name').value = name;
+            qaIcon = icon;
+            qaColor = color;
+            document.getElementById('qa-amount').focus();
+        }
+
+        function submitQuickAdd() {
+            const type = document.getElementById('qa-type').value;
+            const name = document.getElementById('qa-name').value.trim();
+            const amount = parseFloat(document.getElementById('qa-amount').value.replace(',', '.'));
+            
+            // Si ce n'est PAS une enveloppe, le nom est obligatoire. Le montant est toujours obligatoire.
+            if ((type !== 'env' && !name) || isNaN(amount) || amount <= 0) {
+                showToast("Veuillez remplir correctement les champs", true);
+                return;
+            }
+
+            if (type === 'env') {
+                const envId = parseInt(document.getElementById('qa-env-id').value);
+                const env = db.envelopes.find(e => e.id === envId);
+                if (!env) { showToast("Veuillez sélectionner une enveloppe", true); return; }
+                
+                env.spent += amount;
+                if (!env.history) env.history = [];
+                const dateStr = new Date().toLocaleDateString('fr-FR');
+                // Si on a quand même tapé un nom avant de changer la liste, on l'utilise, sinon "Ajout rapide"
+                const historyName = name ? ' - ' + name : ' - Ajout rapide';
+                env.history.push({ id: Date.now(), amount: amount, date: dateStr + historyName });
+                
+                saveToFirebase();
+                showToast("Dépense imputée à l'enveloppe !");
+            } else if (type === 'perso') {
+                localDb.personalExpenses.push({ id: Date.now(), name, amount, icon: qaIcon, color: qaColor, paid: false });
+                saveToLocal();
+                showToast("Dépense personnelle ajoutée !");
+            } else if (type === 'exp') {
+                db.expenses.push({ id: Date.now(), name, amount, paid: false, icon: qaIcon, color: qaColor });
+                saveToFirebase();
+                showToast("Charge commune ajoutée !");
+            }
+
+            closeQuickAdd();
         }
 
         function createPickerHTML(prefix, selectedIcon, selectedColor) {
@@ -826,34 +1004,34 @@
             });
         }
 
-        function editSpent(id) {
-            const env = db.envelopes.find(e => e.id === id);
-            if (!env) return;
-            openModal({ title: "Corriger le montant dépensé (€) :", type: 'number', value: env.spent }, (newValStr) => {
-                if (newValStr) {
+        function editHistoryItem(envId, historyId) {
+            const env = db.envelopes.find(e => e.id === envId);
+            if (!env || !env.history) return;
+            
+            const historyItem = env.history.find(h => h.id === historyId);
+            if (!historyItem) return;
+
+            openModal({ title: "Modifier le montant de cette dépense (€) :", type: 'number', value: historyItem.amount }, (newValStr) => {
+                if (newValStr !== null && newValStr !== "") {
                     const newVal = parseFloat(newValStr.toString().replace(',', '.'));
                     if (!isNaN(newVal) && newVal >= 0) {
-                        const diff = newVal - env.spent;
-                        env.spent = newVal;
+                        // On calcule la différence entre le nouveau et l'ancien montant
+                        const diff = newVal - historyItem.amount;
                         
-                        if (diff !== 0) {
-                            if (!env.history) env.history = [];
-                            const now = new Date();
-                            const dateStr = now.toLocaleDateString('fr-FR');
-                            env.history.push({
-                                id: Date.now(),
-                                amount: diff,
-                                date: dateStr + ' (Correction)'
-                            });
-                        }
-
+                        // On met à jour la ligne de l'historique
+                        historyItem.amount = newVal;
+                        
+                        // On répercute la différence sur le total de l'enveloppe
+                        env.spent = Math.max(0, env.spent + diff);
+                        
                         saveToFirebase();
-                        showToast("Dépense corrigée");
-                    } else { showToast("Montant invalide", true); }
+                        showToast("Dépense mise à jour");
+                    } else { 
+                        showToast("Montant invalide", true); 
+                    }
                 }
             });
         }
-
         function deleteItem(type, id) {
             const isLocal = type === 'personalExpenses';
             openModal({ title: "Supprimer cet élément ?", desc: "Cette action est irréversible.", confirmText: "Supprimer", isDanger: true }, (confirm) => {
@@ -1043,6 +1221,7 @@
             sortedPersoExpenses.forEach(e => {
                 totalPersonalExpenses += e.amount;
                 if (!e.paid) unpaidPersonalExpenses += e.amount;
+                
                 const isPaid = e.paid === true;
                 const color = e.color || '#7209b7';
                 const icon = e.icon || 'fa-user-tie';
@@ -1070,6 +1249,7 @@
             document.getElementById('perso-contribution-input').value = localDb.personalContribution || '';
             
             document.getElementById('perso-expenses-display').innerText = "-" + totalPersonalExpenses.toFixed(2) + " €";
+            
             const arembourserEl = document.getElementById('perso-arembourser-display');
             if (arembourserEl) {
                 arembourserEl.innerText = unpaidPersonalExpenses.toFixed(2) + " €";
@@ -1148,10 +1328,10 @@
                         <div class="flex flex-wrap justify-between items-center gap-3 mt-3">
                             <div class="flex gap-4 text-xs text-slate-500">
                                 <span>Plafond : <span onclick="editAmount('envelopes', ${e.id})" class="font-bold text-slate-700 cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted transition">${e.budget.toFixed(2)} €</span></span>
-                                <span>Dépensé : <span onclick="editSpent(${e.id})" class="font-bold text-slate-700 cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted transition">${e.spent.toFixed(2)} €</span></span>
+                                <span>Dépensé : <span class="font-bold text-slate-700">${e.spent.toFixed(2)} €</span></span>
                             </div>
                             <div class="flex w-full sm:w-auto max-w-[190px] gap-2 text-sm ml-auto">
-                                <input type="number" id="manual-input-${e.id}" placeholder="Montant" step="0.01" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-center focus:outline-none focus:border-indigo-500">
+                                <input type="number" inputmode="decimal" id="manual-input-${e.id}" placeholder="Montant" step="0.01" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-center focus:outline-none focus:border-indigo-500">
                                 <button onclick="manualSpend(${e.id})" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-3 py-2 rounded-lg transition shadow-sm">OK</button>
                             </div>
                         </div>
@@ -1166,7 +1346,7 @@
                                     <div class="flex justify-between items-center text-sm bg-slate-50 p-2 rounded-lg border border-slate-100">
                                         <span class="text-slate-400 text-[10px] font-medium">${h.date || ''}</span>
                                         <div class="flex items-center gap-3">
-                                            <span class="font-bold ${h.amount > 0 ? 'text-slate-700' : 'text-emerald-600'}">${h.amount > 0 ? '+' : ''}${h.amount.toFixed(2)} €</span>
+                                            <span onclick="editHistoryItem(${e.id}, ${h.id})" class="font-bold cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted transition ${h.amount > 0 ? 'text-slate-700' : 'text-emerald-600'}">${h.amount > 0 ? '+' : ''}${h.amount.toFixed(2)} €</span>
                                             <button onclick="deleteEnvelopeHistoryItem(${e.id}, ${h.id})" class="text-slate-300 hover:text-rose-500 transition" title="Supprimer cette dépense"><i class="fa-solid fa-xmark text-sm"></i></button>
                                         </div>
                                     </div>
@@ -1240,7 +1420,6 @@
             resteReelEl.innerText = resteReel.toFixed(2) + " €";
             resteReelEl.className = `text-lg md:text-xl font-black tracking-tight ${resteReel >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            // MAJ du Reste à vivre dans le bloc Prévision
             const resteAvivreBlocPrev = document.getElementById('recap-reste-a-vivre-prev');
             if (resteAvivreBlocPrev) {
                 resteAvivreBlocPrev.innerText = restePrev.toFixed(2) + " €";
@@ -1293,7 +1472,18 @@
             } else {
                 resDiv.classList.add('hidden');
             }
-        }            
+        }
+
+        // --- NOUVEAUTÉ : Autofocus à l'ouverture d'un menu déroulant ---
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', () => {
+                if (detail.open) {
+                    const firstInput = detail.querySelector('input[type="text"], input[type="number"]');
+                    if (firstInput) setTimeout(() => firstInput.focus(), 100);
+                }
+            });
+        });
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
