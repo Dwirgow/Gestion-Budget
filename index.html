@@ -333,7 +333,7 @@
             <div class="grid md:grid-cols-2 gap-6">
                 
                 <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
                         <details class="[&_summary::-webkit-details-marker]:hidden group">
                             <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none border-b border-slate-100 pb-3">
                                 <span class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500"></i> Prévision</span>
@@ -370,13 +370,23 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 flex justify-between items-center mt-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-white text-emerald-600 flex items-center justify-center text-sm flex-shrink-0 shadow-sm"><i class="fa-solid fa-piggy-bank"></i></div>
+                                        <div>
+                                            <h4 class="text-[10px] md:text-xs font-bold text-emerald-600/70 uppercase tracking-wide leading-none mb-0.5">Reste à vivre</h4>
+                                            <p class="text-lg md:text-xl font-bold text-emerald-700" id="recap-reste-a-vivre-prev">0.00 €</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </details>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
                         <div class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base outline-none list-none border-b border-slate-100 pb-3">
                             <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Bilan : Prévu vs Réel</span>
                         </div>
@@ -1035,7 +1045,7 @@
                             </div>
                         </div>
                         <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-3">
-                            <div class="h-full rounded-full transition-all duration-300 ${over ? 'bg-rose-500' : ''}" style="width: ${pct}%; ${!over ? `background-color: ${color};` : ''}"></div>
+                            <div class="h-fit rounded-full transition-all duration-300 ${over ? 'bg-rose-500' : ''}" style="width: ${pct}%; ${!over ? `background-color: ${color};` : ''}"></div>
                         </div>
                         <div class="flex flex-wrap justify-between items-center gap-3 mt-3">
                             <div class="flex gap-4 text-xs text-slate-500">
@@ -1127,6 +1137,14 @@
             const restePrevEl = document.getElementById('recap-reste-prev');
             restePrevEl.innerText = restePrev.toFixed(2) + " €";
             restePrevEl.className = `text-lg md:text-xl font-black tracking-tight ${restePrev >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+
+            // MAJ du Reste à vivre dans le bloc Prévision
+            const resteAvivreBlocPrev = document.getElementById('recap-reste-a-vivre-prev');
+            if (resteAvivreBlocPrev) {
+                resteAvivreBlocPrev.innerText = restePrev.toFixed(2) + " €";
+                // On adapte la couleur selon si le reste est positif ou négatif
+                resteAvivreBlocPrev.className = `text-lg md:text-xl font-bold ${restePrev >= 0 ? 'text-emerald-700' : 'text-rose-600'}`;
+            }
 
             const resteReelEl = document.getElementById('recap-reste-reel');
             resteReelEl.innerText = resteReel.toFixed(2) + " €";
