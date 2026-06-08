@@ -95,153 +95,157 @@
                 
                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 items-start">
     
-    <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
-        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-            <div class="flex items-center gap-2 text-base truncate">
-                <i class="fa-solid fa-user text-indigo-500"></i> <span class="truncate">Perso</span>
-            </div>
-            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
-        </summary>
-        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">
-            <div>
-                <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire / Revenus</label>
-                <div class="flex gap-2">
-                    <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                    <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
-                </div>
-            </div>
-            <div>
-                <label class="text-xs font-bold text-slate-600 block mb-1">Vers compte commun</label>
-                <div class="flex gap-2">
-                    <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                    <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
-                </div>
-            </div>
-        </div>
-    </details>
+                    <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 text-base truncate">
+                                <i class="fa-solid fa-user text-indigo-500"></i> <span class="truncate">Perso</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                        </summary>
+                        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">Mon Salaire</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="perso-salary-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <button onclick="updatePersonalSalary()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">Vers compte commun</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="perso-contribution-input" placeholder="€" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <button onclick="updatePersonalContribution()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition shadow-sm text-sm"><i class="fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
 
-    <details id="form-perso-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
-        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-            <div class="flex items-center gap-2 text-base truncate">
-                <i class="fa-solid fa-cart-shopping text-rose-500"></i> <span class="truncate">Dépenses personnelles</span>
-            </div>
-            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
-        </summary>
-        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
-            <div>
-                <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                <datalist id="perso-expenses-datalist"></datalist>
-            </div>
-            <div>
-                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-            </div>
-            <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
-                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                    <span>Modifier l'apparence</span>
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
-                </summary>
-                <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
-            </details>
-            <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
-        </div>
-    </details>
+                    <details id="form-perso-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 text-base truncate">
+                                <i class="fa-solid fa-cart-shopping text-rose-500"></i> <span class="truncate">Dépenses personnelles</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                        </summary>
+                        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                            <div>
+                                <input type="text" id="perso-exp-name" list="perso-expenses-datalist" oninput="checkAutoFill('persoExp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                <datalist id="perso-expenses-datalist"></datalist>
+                            </div>
+                            <div>
+                                <input type="number" id="perso-exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <details id="perso-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                    <span>Modifier l'apparence</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                                </summary>
+                                <div class="pt-3 mt-3 border-t border-slate-200" id="perso-picker-mount"></div>
+                            </details>
+                            <button onclick="addPersonalExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                        </div>
+                    </details>
 
-</div>
+                </div>
 
                 <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit mt-6">
-    <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
-        <div class="flex items-center gap-2 text-base">
-            <i class="fa-solid fa-chart-pie text-emerald-500"></i> Récapitulatif
-        </div>
-        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 text-xs"></i>
-    </summary>
-    
-    <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2">
-        <div class="grid grid-cols-2 gap-4 mt-2">
-            <div>
-                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Salaire</p>
-                <div id="perso-salary-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
-            </div>
-            <div>
-                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Contribution</p>
-                <div id="perso-contribution-display" class="font-bold text-rose-500 text-sm">0.00 €</div>
-            </div>
-            <div>
-                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses</p>
-                <div id="perso-expenses-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
-            </div>
-            <div>
-                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reste</p>
-                <div id="perso-reste-display" class="text-2xl md:text-3xl font-black tracking-tight text-emerald-600 mt-1">0.00 €</div>
-            </div>
-        </div>
-    </div>
-</details>
+                    <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-2 text-base">
+                            <i class="fa-solid fa-chart-pie text-emerald-500"></i> Récapitulatif
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                    </summary>
+                    
+                    <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2">
+                        <div class="grid grid-cols-2 gap-4 mt-2">
+                            <div>
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Salaire</p>
+                                <div id="perso-salary-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
+                            </div>
+                            <div>
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Contribution</p>
+                                <div id="perso-contribution-display" class="font-bold text-rose-500 text-sm">0.00 €</div>
+                            </div>
+                            <div>
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses</p>
+                                <div id="perso-expenses-display" class="font-bold text-slate-800 text-sm">0.00 €</div>
+                            </div>
+                            <div>
+                                <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reste</p>
+                                <div id="perso-reste-display" class="text-2xl md:text-3xl font-black tracking-tight text-emerald-600 mt-1">0.00 €</div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
 
                 <div>
                     <div class="flex justify-between items-end mb-3">
                         <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Mes Dépenses</h2>
-                        <span class="text-xs text-slate-400 italic">Cochez quand passé</span>
+                        <span class="text-xs text-slate-400 italic">Cochez quand remboursé</span>
                     </div>
                     <div id="perso-expenses-list" class="space-y-2"></div>
                 </div>
 
             </div>
-        </div>        <div id="tab-revenus" class="tab-content">
+        </div>        
+
+        <div id="tab-revenus" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="space-y-6">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                        <details class="[&_summary::-webkit-details-marker]:hidden group">
-                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Calculateur (Prorata)</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                            </summary>
-                            <div class="mt-4 space-y-4">                                
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 1</label>
-                                        <input type="number" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 2</label>
-                                        <input type="number" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
-                                    </div>
+                    
+                    <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 text-base truncate">
+                                <i class="fa-solid fa-scale-balanced text-indigo-500"></i> <span class="truncate">Calculateur (Prorata)</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                        </summary>
+                        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-4">                                
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 1</label>
+                                    <input type="number" id="calc-sal-1" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-600 block mb-1">Besoin total du Pot Commun</label>
-                                    <input type="number" id="calc-besoin" placeholder="Total des charges + enveloppes (€)" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
-                                </div>
-                                <div id="prorata-result" class="hidden bg-indigo-50 p-4 rounded-xl text-sm border border-indigo-100">
-                                    <div class="flex justify-between items-center mb-2 border-b border-indigo-100 pb-2">
-                                        <span class="text-indigo-800 font-medium">Ma part :</span> 
-                                        <strong class="text-indigo-900 text-lg" id="calc-part-1">0 €</strong>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-indigo-800 font-medium">Sa part :</span> 
-                                        <strong class="text-indigo-900 text-lg" id="calc-part-2">0 €</strong>
-                                    </div>
+                                    <label class="text-xs font-bold text-slate-600 block mb-1">Salaire 2</label>
+                                    <input type="number" id="calc-sal-2" placeholder="€" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
                                 </div>
                             </div>
-                        </details>
-                    </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">Besoin total du Pot Commun</label>
+                                <input type="number" id="calc-besoin" placeholder="Total des charges + enveloppes (€)" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500" oninput="calculateProrata()">
+                            </div>
+                            <div id="prorata-result" class="hidden bg-indigo-50 p-4 rounded-xl text-sm border border-indigo-100">
+                                <div class="flex justify-between items-center mb-2 border-b border-indigo-100 pb-2">
+                                    <span class="text-indigo-800 font-medium">Salaire 1 :</span> 
+                                    <strong class="text-indigo-900 text-lg" id="calc-part-1">0 €</strong>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-indigo-800 font-medium">Salaire 2 :</span> 
+                                    <strong class="text-indigo-900 text-lg" id="calc-part-2">0 €</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
 
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                        <details id="form-revenue-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
-                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-500"></i> Ajouter au pot commun</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                            </summary>
-                            <div class="space-y-3 mt-4">                               
-                                <div>
-                                    <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                                </div>
-                                <div>
-                                    <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                                </div>
-                                <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter au Pot Commun</button>
+                    <details id="form-revenue-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 text-base truncate">
+                                <i class="fa-solid fa-plus-circle text-emerald-500"></i> <span class="truncate">Ajouter au pot commun</span>
                             </div>
-                        </details>
-                    </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                        </summary>
+                        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">                               
+                            <div>
+                                <input type="text" id="rev-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <input type="number" id="rev-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="addRevenue()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                        </div>
+                    </details>
+
                 </div>
 
                 <div class="md:col-span-2 space-y-3">
@@ -253,31 +257,33 @@
 
         <div id="tab-depenses" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <details id="form-expense-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
-                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-rose-500"></i> Nouvelle charge</span>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                        </summary>
-                        <div class="space-y-3 mt-4">
-                            <div>
-                                <input type="text" id="exp-name" list="common-expenses-list" oninput="checkAutoFill('exp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                                <datalist id="common-expenses-list"></datalist>
-                            </div>
-                            <div>
-                                <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <details id="exp-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
-                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                                    <span>Personnaliser l'apparence</span>
-                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
-                                </summary>
-                                <div class="pt-3 mt-3 border-t border-slate-200" id="exp-picker-mount"></div>
-                            </details>
-                            <button onclick="addExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                
+                <details id="form-expense-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                    <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-2 text-base truncate">
+                            <i class="fa-solid fa-plus-circle text-rose-500"></i> <span class="truncate">Nouvelle charge</span>
                         </div>
-                    </details>
-                </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                    </summary>
+                    <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                        <div>
+                            <input type="text" id="exp-name" list="common-expenses-list" oninput="checkAutoFill('exp')" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                            <datalist id="common-expenses-list"></datalist>
+                        </div>
+                        <div>
+                            <input type="number" id="exp-amount" placeholder="Montant (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <details id="exp-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                            <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                <span>Personnaliser l'apparence</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                            </summary>
+                            <div class="pt-3 mt-3 border-t border-slate-200" id="exp-picker-mount"></div>
+                        </details>
+                        <button onclick="addExpense()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Ajouter</button>
+                    </div>
+                </details>
+
                 <div class="md:col-span-2 space-y-3">
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Charges incompressibles</h2>
@@ -290,32 +296,34 @@
 
         <div id="tab-envelopes" class="tab-content">
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                    <details id="form-envelope-toggle" class="[&_summary::-webkit-details-marker]:hidden group">
-                        <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-folder-plus text-indigo-500"></i> Créer une enveloppe</span>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                        </summary>
-                        <div class="space-y-3 mt-4">
-                            <div>
-                                <input type="text" id="env-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <div>
-                                <input type="number" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <details id="env-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
-                                <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
-                                    <span>Personnaliser l'apparence</span>
-                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
-                                </summary>
-                                <div class="pt-3 mt-3 border-t border-slate-200" id="env-picker-mount"></div>
-                            </details>
-                            <button onclick="addEnvelope()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Créer l'enveloppe</button>
+                
+                <details id="form-envelope-toggle" class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                    <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-2 text-base truncate">
+                            <i class="fa-solid fa-folder-plus text-indigo-500"></i> <span class="truncate">Créer une enveloppe</span>
                         </div>
-                    </details>
-                </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                    </summary>
+                    <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                        <div>
+                            <input type="text" id="env-name" placeholder="Nom" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <input type="number" id="env-budget" placeholder="Plafond mensuel (€)" step="0.01" class="w-full text-sm p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <details id="env-appearance-details" class="bg-slate-50 border border-slate-200 rounded-xl p-3 [&_summary::-webkit-details-marker]:hidden group/picker">
+                            <summary class="text-sm font-medium text-slate-600 cursor-pointer flex justify-between items-center outline-none">
+                                <span>Personnaliser l'apparence</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open\/picker:rotate-180"></i>
+                            </summary>
+                            <div class="pt-3 mt-3 border-t border-slate-200" id="env-picker-mount"></div>
+                        </details>
+                        <button onclick="addEnvelope()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm">Créer l'enveloppe</button>
+                    </div>
+                </details>
+
                 <div class="md:col-span-2 space-y-5">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex justify-center items-center mb-6">
+                    <div class="bg-white p-3 md:p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-center items-center mb-6">
                         <div class="relative w-40 h-40 rounded-full flex-shrink-0 shadow-inner" id="env-donut" style="background: conic-gradient(#e2e8f0 100%, #e2e8f0 100%);">
                             <div class="absolute inset-3 bg-white rounded-full flex flex-col items-center justify-center shadow-sm">
                                 <span class="text-xs text-slate-400 font-semibold uppercase">Restant</span>
@@ -333,65 +341,67 @@
             <div class="grid md:grid-cols-2 gap-6">
                 
                 <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                        <details class="[&_summary::-webkit-details-marker]:hidden group">
-                            <summary class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base cursor-pointer outline-none list-none border-b border-slate-100 pb-3">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500"></i> Prévision</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 group-open:rotate-180"></i>
-                            </summary>
-                            
-                            <div class="mt-4 space-y-3">
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-arrow-trend-up"></i></div>
-                                        <div>
-                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Fonds Pot Commun</h4>
-                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-building-columns"></i></div>
-                                        <div>
-                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Charges communes</h4>
-                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-basket-shopping"></i></div>
-                                        <div>
-                                            <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Enveloppes (Prévu)</h4>
-                                            <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 flex justify-between items-center mt-2">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-white text-emerald-600 flex items-center justify-center text-sm flex-shrink-0 shadow-sm"><i class="fa-solid fa-piggy-bank"></i></div>
-                                        <div>
-                                            <h4 class="text-[10px] md:text-xs font-bold text-emerald-600/70 uppercase tracking-wide leading-none mb-0.5">Reste à vivre</h4>
-                                            <p class="text-lg md:text-xl font-bold text-emerald-700" id="recap-reste-a-vivre-prev">0.00 €</p>
-                                        </div>
+                    <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit">
+                        <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+                            <div class="flex items-center gap-2 text-base truncate">
+                                <i class="fa-solid fa-chart-line text-emerald-500"></i> <span class="truncate">Prévision</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 text-xs"></i>
+                        </summary>
+                        
+                        <div class="p-3 md:p-5 pt-0 border-t border-slate-100 mt-2 space-y-3">
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                                    <div>
+                                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Fonds Pot Commun</h4>
+                                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-revenues">0.00 €</p>
                                     </div>
                                 </div>
                             </div>
-                        </details>
-                    </div>
+                            
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-building-columns"></i></div>
+                                    <div>
+                                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Charges communes</h4>
+                                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-expenses">0.00 €</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fa-solid fa-basket-shopping"></i></div>
+                                    <div>
+                                        <h4 class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wide leading-none mb-0.5">Enveloppes (Prévu)</h4>
+                                        <p class="text-lg md:text-xl font-bold text-slate-900" id="recap-total-envelopes">0.00 €</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 flex justify-between items-center mt-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white text-emerald-600 flex items-center justify-center text-sm flex-shrink-0 shadow-sm"><i class="fa-solid fa-piggy-bank"></i></div>
+                                    <div>
+                                        <h4 class="text-[10px] md:text-xs font-bold text-emerald-600/70 uppercase tracking-wide leading-none mb-0.5">Reste à vivre</h4>
+                                        <p class="text-lg md:text-xl font-bold text-emerald-700" id="recap-reste-a-vivre-prev">0.00 €</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-fit">
-                        <div class="font-bold text-slate-900 flex justify-between items-center gap-2 text-base outline-none list-none border-b border-slate-100 pb-3">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-scale-balanced text-indigo-500"></i> Bilan : Prévu vs Réel</span>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 h-fit">
+                        <div class="font-bold text-slate-900 p-3 md:p-5 flex justify-between items-center gap-2 text-base outline-none list-none border-b border-slate-100">
+                            <div class="flex items-center gap-2 truncate">
+                                <i class="fa-solid fa-scale-balanced text-indigo-500"></i> <span class="truncate">Bilan : Prévu vs Réel</span>
+                            </div>
                         </div>
                         
-                        <div class="mt-4">
+                        <div class="p-3 md:p-5 pt-0 mt-3">
                             <div class="flex justify-between items-center text-sm mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
                                 <span class="text-slate-600 font-medium">Fonds dispo. (après charges) :</span>
                                 <span class="font-bold text-slate-800" id="recap-fonds-base">0.00 €</span>
@@ -741,7 +751,6 @@
                         const diff = newVal - env.spent;
                         env.spent = newVal;
                         
-                        // Ajout de la correction dans l'historique
                         if (diff !== 0) {
                             if (!env.history) env.history = [];
                             const now = new Date();
@@ -828,7 +837,6 @@
             if (!isNaN(amount) && amount > 0 && env) {
                 env.spent += amount;
                 
-                // Ajout à l'historique
                 if (!env.history) env.history = [];
                 const now = new Date();
                 const dateStr = now.toLocaleDateString('fr-FR');
@@ -845,7 +853,6 @@
             } else { showToast("Montant invalide", true); }
         }
 
-        // Nouvelle fonction pour supprimer une dépense de l'historique d'une enveloppe
         function deleteEnvelopeHistoryItem(envId, historyId) {
             const env = db.envelopes.find(e => e.id === envId);
             if (env && env.history) {
@@ -863,7 +870,7 @@
         function resetMonthExpenses() {
             openModal({ title: "Nouveau mois", desc: "Remettre les dépenses à 0€, décocher les charges communes et supprimer les dépenses perso ?", confirmText: "Oui, réinitialiser" }, (confirm) => {
                 if (confirm) {
-                    if (db.envelopes) db.envelopes.forEach(e => { e.spent = 0; e.history = []; }); // On vide l'historique
+                    if (db.envelopes) db.envelopes.forEach(e => { e.spent = 0; e.history = []; }); 
                     if (db.expenses) db.expenses.forEach(e => e.paid = false);
                     saveToFirebase();
                     
@@ -980,7 +987,7 @@
             const restePerso = (localDb.personalSalary || 0) - (localDb.personalContribution || 0) - totalPersonalExpenses;
             const persoRestEl = document.getElementById('perso-reste-display');
             persoRestEl.innerText = restePerso.toFixed(2) + " €";
-            persoRestEl.className = `text-3xl md:text-4xl font-black tracking-tight mt-1 ${restePerso >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+            persoRestEl.className = `text-2xl md:text-3xl font-black tracking-tight mt-1 ${restePerso >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
             const expList = document.getElementById('expenses-list');
             expList.innerHTML = '';
@@ -1045,7 +1052,7 @@
                             </div>
                         </div>
                         <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-3">
-                            <div class="h-fit rounded-full transition-all duration-300 ${over ? 'bg-rose-500' : ''}" style="width: ${pct}%; ${!over ? `background-color: ${color};` : ''}"></div>
+                            <div class="h-full rounded-full transition-all duration-300 ${over ? 'bg-rose-500' : ''}" style="width: ${pct}%; ${!over ? `background-color: ${color};` : ''}"></div>
                         </div>
                         <div class="flex flex-wrap justify-between items-center gap-3 mt-3">
                             <div class="flex gap-4 text-xs text-slate-500">
@@ -1138,19 +1145,17 @@
             restePrevEl.innerText = restePrev.toFixed(2) + " €";
             restePrevEl.className = `text-lg md:text-xl font-black tracking-tight ${restePrev >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            // MAJ du Reste à vivre dans le bloc Prévision
-            const resteAvivreBlocPrev = document.getElementById('recap-reste-a-vivre-prev');
-            if (resteAvivreBlocPrev) {
-                resteAvivreBlocPrev.innerText = restePrev.toFixed(2) + " €";
-                // On adapte la couleur selon si le reste est positif ou négatif
-                resteAvivreBlocPrev.className = `text-lg md:text-xl font-bold ${restePrev >= 0 ? 'text-emerald-700' : 'text-rose-600'}`;
-            }
-
             const resteReelEl = document.getElementById('recap-reste-reel');
             resteReelEl.innerText = resteReel.toFixed(2) + " €";
             resteReelEl.className = `text-lg md:text-xl font-black tracking-tight ${resteReel >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            // --- Restauration UI du prorata (Cloud) ---
+            // MAJ du Reste à vivre dans le bloc Prévision
+            const resteAvivreBlocPrev = document.getElementById('recap-reste-a-vivre-prev');
+            if (resteAvivreBlocPrev) {
+                resteAvivreBlocPrev.innerText = restePrev.toFixed(2) + " €";
+                resteAvivreBlocPrev.className = `text-lg md:text-xl font-bold ${restePrev >= 0 ? 'text-emerald-700' : 'text-rose-600'}`;
+            }
+
             if (document.activeElement !== document.getElementById('calc-sal-1') && 
                 document.activeElement !== document.getElementById('calc-sal-2') && 
                 document.activeElement !== document.getElementById('calc-besoin')) {
@@ -1168,7 +1173,6 @@
             const s2Input = document.getElementById('calc-sal-2').value;
             const besoinInput = document.getElementById('calc-besoin').value;
 
-            // Sauvegarde dans Firebase
             db.prorata = {
                 sal1: s1Input,
                 sal2: s2Input,
