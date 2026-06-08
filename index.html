@@ -831,7 +831,7 @@
                 // Ajout à l'historique
                 if (!env.history) env.history = [];
                 const now = new Date();
-                const dateStr = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+                const dateStr = now.toLocaleDateString('fr-FR');
                 
                 env.history.push({
                     id: Date.now(),
