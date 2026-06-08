@@ -55,6 +55,33 @@
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 antialiased font-sans pb-12">
 
+    <div id="auth-screen" class="fixed inset-0 bg-slate-100 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-200">
+            <div class="flex justify-center mb-6">
+                <div class="bg-indigo-600 text-white w-16 h-16 flex items-center justify-center rounded-2xl shadow-sm">
+                    <i class="fa-solid fa-vault text-3xl"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-center text-slate-900 mb-6">Mon Budget</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Email</label>
+                    <input type="email" id="auth-email" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500" placeholder="couple@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Mot de passe</label>
+                    <input type="password" id="auth-password" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500" placeholder="••••••••">
+                </div>
+                
+                <div id="auth-error" class="text-rose-500 text-sm font-medium text-center hidden">Erreur de connexion</div>
+                
+                <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition shadow-md">Se connecter</button>
+                <button onclick="handleRegister()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition">Créer un compte</button>
+            </div>
+        </div>
+    </div>
+
     <div class="max-w-4xl mx-auto px-4 pt-6">
         <header class="bg-white rounded-xl md:rounded-2xl p-3 md:p-6 shadow-sm border border-slate-100 mb-4 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 overflow-hidden">
@@ -67,9 +94,14 @@
                 </div>
             </div>
             
-            <button onclick="resetMonthExpenses()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 p-2.5 md:px-3 md:py-2 rounded-lg font-bold transition flex items-center gap-2 text-sm md:text-xs flex-shrink-0" title="Réinitialiser le mois">
-                <i class="fa-solid fa-calendar-minus"></i> <span class="hidden sm:inline">Réinitialiser</span>
-            </button>
+            <div class="flex gap-2">
+                <button onclick="resetMonthExpenses()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 p-2.5 md:px-3 md:py-2 rounded-lg font-bold transition flex items-center gap-2 text-sm md:text-xs flex-shrink-0" title="Réinitialiser le mois">
+                    <i class="fa-solid fa-calendar-minus"></i> <span class="hidden sm:inline">Nouveau mois</span>
+                </button>
+                <button onclick="handleLogout()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2.5 md:px-3 md:py-2 rounded-lg font-bold transition flex items-center gap-2 text-sm md:text-xs flex-shrink-0" title="Se déconnecter">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </button>
+            </div>
         </header>
 
         <nav class="flex border-b border-slate-200 bg-white rounded-xl p-1.5 shadow-sm border border-slate-100 mb-6 overflow-x-auto whitespace-nowrap hide-scrollbar">
@@ -148,7 +180,7 @@
 
                 </div>
 
-                <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit mt-6">
+                <details class="bg-white rounded-2xl shadow-sm border border-slate-100 group h-fit mt-3 md:mt-6">
                     <summary class="font-bold text-slate-900 p-3 md:p-5 cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
                         <div class="flex items-center gap-2 text-base">
                             <i class="fa-solid fa-chart-pie text-emerald-500"></i> Récapitulatif
@@ -463,8 +495,7 @@
         };
         
         firebase.initializeApp(firebaseConfig);
-        let dbRef = firebase.database().ref('budgets/notre_budget_secret_123');
-
+        
         const COLORS = ['#d90429', '#fb8500', '#ffb703', '#2b9348', '#06d6a0', '#00b4d8', '#03045e', '#7209b7', '#f72585', '#1f2937'];
         const ICONS = ['fa-basket-shopping', 'fa-house', 'fa-bolt', 'fa-car', 'fa-bag-shopping', 'fa-gift', 'fa-baby', 'fa-utensils', 'fa-cat', 'fa-plane', 'fa-champagne-glasses', 'fa-file-invoice-dollar', 'fa-user-tie', 'fa-mobile-screen'];
 
@@ -498,26 +529,76 @@
                 console.error("Erreur de lecture locale", e);
             }
         }
+        
+        let dbRef = null;
+        const auth = firebase.auth();
+        const authScreen = document.getElementById('auth-screen');
+        const authEmail = document.getElementById('auth-email');
+        const authPassword = document.getElementById('auth-password');
+        const authError = document.getElementById('auth-error');
 
-        dbRef.on('value', (snapshot) => {
-            const cloudData = snapshot.val();
-            if (cloudData) {
-                db = cloudData;
-                if (!db.revenus) db.revenus = [];
-                if (!db.expenses) db.expenses = [];
-                if (!db.envelopes) db.envelopes = [];
-                if (!db.prorata) db.prorata = { sal1: '', sal2: '', besoin: '' };
+        // Écouteur d'état de connexion : s'exécute automatiquement au lancement et lors d'une connexion/déconnexion
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // L'utilisateur est connecté ! On cache l'écran de connexion.
+                authScreen.classList.add('hidden');
+                
+                // On pointe la base de données vers SON identifiant unique
+                if (dbRef) dbRef.off(); 
+                dbRef = firebase.database().ref('budgets/' + user.uid);
+                
+                // On charge ses données (comme avant)
+                dbRef.on('value', (snapshot) => {
+                    const cloudData = snapshot.val();
+                    if (cloudData) {
+                        db = cloudData;
+                        if (!db.revenus) db.revenus = [];
+                        if (!db.expenses) db.expenses = [];
+                        if (!db.envelopes) db.envelopes = [];
+                        if (!db.prorata) db.prorata = { sal1: '', sal2: '', besoin: '' };
+                    } else {
+                        db = {
+                            revenus: [{ id: 1, name: "Virement compte commun", amount: 1500 }],
+                            expenses: [{ id: 2, name: "Loyer", amount: 700, paid: false, icon: 'fa-house', color: '#03045e' }],
+                            envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#00b4d8", icon: 'fa-basket-shopping' }],
+                            prorata: { sal1: '', sal2: '', besoin: '' }
+                        };
+                        saveToFirebase();
+                    }
+                    renderAll();
+                });
             } else {
-                db = {
-                    revenus: [{ id: 1, name: "Virement compte commun", amount: 1500 }],
-                    expenses: [{ id: 2, name: "Loyer", amount: 700, paid: false, icon: 'fa-house', color: '#03045e' }],
-                    envelopes: [{ id: 3, name: "Courses", budget: 300, spent: 0, color: "#00b4d8", icon: 'fa-basket-shopping' }],
-                    prorata: { sal1: '', sal2: '', besoin: '' }
-                };
-                saveToFirebase();
+                // Pas d'utilisateur (ou déconnecté) : on affiche l'écran de connexion
+                authScreen.classList.remove('hidden');
+                if (dbRef) dbRef.off(); // On arrête d'écouter la base de données
             }
-            renderAll();
         });
+
+        // Fonctions liées aux boutons de l'interface de connexion
+        function handleLogin() {
+            authError.classList.add('hidden');
+            auth.signInWithEmailAndPassword(authEmail.value, authPassword.value)
+                .catch(error => {
+                    authError.innerText = "Email ou mot de passe incorrect.";
+                    authError.classList.remove('hidden');
+                });
+        }
+
+        function handleRegister() {
+            authError.classList.add('hidden');
+            auth.createUserWithEmailAndPassword(authEmail.value, authPassword.value)
+                .then(() => showToast("Compte créé avec succès !"))
+                .catch(error => {
+                    if(error.code === 'auth/weak-password') authError.innerText = "Le mot de passe doit faire au moins 6 caractères.";
+                    else if(error.code === 'auth/email-already-in-use') authError.innerText = "Un compte existe déjà avec cet email.";
+                    else authError.innerText = "Erreur lors de la création du compte.";
+                    authError.classList.remove('hidden');
+                });
+        }
+
+        function handleLogout() {
+            auth.signOut();
+        }
 
         function saveToFirebase() {
             if (dbRef) {
