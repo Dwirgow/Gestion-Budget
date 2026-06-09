@@ -1095,8 +1095,10 @@
 
         function manualSpend(id) {
             const input = document.getElementById(`manual-input-${id}`);
+            const nameInput = document.getElementById(`manual-name-${id}`); // On récupère le champ Nom
             const amount = parseFloat(input.value.toString().replace(',', '.'));
             const env = db.envelopes.find(e => e.id === id);
+            
             if (!isNaN(amount) && amount > 0 && env) {
                 env.spent += amount;
                 
@@ -1104,18 +1106,26 @@
                 const now = new Date();
                 const dateStr = now.toLocaleDateString('fr-FR');
                 
+                // Si un nom a été tapé, on l'ajoute. Sinon, on garde juste la date.
+                const desc = nameInput.value.trim();
+                const historyText = desc ? `${dateStr} - ${desc}` : dateStr;
+                
                 env.history.push({
                     id: Date.now(),
                     amount: amount,
-                    date: dateStr
+                    date: historyText
                 });
 
+                // On vide les champs après l'ajout
                 input.value = '';
+                nameInput.value = '';
+                
                 saveToFirebase();
                 showToast("Dépense enregistrée");
-            } else { showToast("Montant invalide", true); }
+            } else { 
+                showToast("Montant invalide", true); 
+            }
         }
-
         function deleteEnvelopeHistoryItem(envId, historyId) {
             const env = db.envelopes.find(e => e.id === envId);
             if (env && env.history) {
@@ -1330,9 +1340,12 @@
                                 <span>Plafond : <span onclick="editAmount('envelopes', ${e.id})" class="font-bold text-slate-700 cursor-pointer hover:text-indigo-600 hover:underline decoration-dotted transition">${e.budget.toFixed(2)} €</span></span>
                                 <span>Dépensé : <span class="font-bold text-slate-700">${e.spent.toFixed(2)} €</span></span>
                             </div>
-                            <div class="flex w-full sm:w-auto max-w-[190px] gap-2 text-sm ml-auto">
-                                <input type="number" inputmode="decimal" id="manual-input-${e.id}" placeholder="Montant" step="0.01" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-center focus:outline-none focus:border-indigo-500">
-                                <button onclick="manualSpend(${e.id})" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-3 py-2 rounded-lg transition shadow-sm">OK</button>
+                            <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2 text-sm ml-auto mt-2 sm:mt-0">
+                                <input type="text" id="manual-name-${e.id}" placeholder="Nom (optionnel)" class="w-full sm:w-32 p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                                <div class="flex gap-2">
+                                    <input type="number" inputmode="decimal" id="manual-input-${e.id}" placeholder="Montant" step="0.01" class="w-full sm:w-24 p-2 bg-slate-50 border border-slate-200 rounded-lg text-center focus:outline-none focus:border-indigo-500">
+                                    <button onclick="manualSpend(${e.id})" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-3 py-2 rounded-lg transition shadow-sm flex-shrink-0">OK</button>
+                                </div>
                             </div>
                         </div>
                         ${e.history && e.history.length > 0 ? `
