@@ -334,9 +334,12 @@
 
                 <div class="md:col-span-2 space-y-3">
                     <div class="flex justify-between items-end mb-2">
-                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Charges incompressibles</h2>
-                        <span class="text-xs text-slate-400 italic">Cochez quand passé</span>
-                    </div>
+						<div>
+							<h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Charges incompressibles</h2>
+							<div class="text-xs text-slate-500 mt-0.5">Reste à payer : <span id="exp-reste-a-payer" class="font-bold text-rose-500">0.00 €</span></div>
+						</div>
+						<span class="text-xs text-slate-400 italic">Cochez quand passé</span>
+					</div>
                     <div id="expenses-list" class="space-y-2"></div>
                 </div>
             </div>
@@ -1273,6 +1276,8 @@
             const expList = document.getElementById('expenses-list');
             expList.innerHTML = '';
             
+			let unpaidCommonExpenses = 0;
+			
             const sortedExpenses = [...db.expenses].sort((a, b) => {
                 if (a.paid !== b.paid) return a.paid ? 1 : -1;
                 return COLORS.indexOf(a.color || '#1f2937') - COLORS.indexOf(b.color || '#1f2937');
@@ -1280,6 +1285,7 @@
             
             sortedExpenses.forEach(e => {
                 totalExpenses += e.amount;
+				if (!e.paid) unpaidCommonExpenses += e.amount;
                 const isPaid = e.paid === true;
                 const color = e.color || '#1f2937';
                 const icon = e.icon || 'fa-file-invoice-dollar';
@@ -1299,6 +1305,13 @@
                         </div>
                     </div>`;
             });
+			
+			const expResteAPayerEl = document.getElementById('exp-reste-a-payer');
+            if (expResteAPayerEl) {
+                expResteAPayerEl.innerText = unpaidCommonExpenses.toFixed(2) + " €";
+                // Passe en vert si tout est payé, en rouge sinon
+                expResteAPayerEl.className = unpaidCommonExpenses > 0 ? "font-bold text-rose-500" : "font-bold text-emerald-500";
+            }
 
             const envList = document.getElementById('envelopes-list');
             envList.innerHTML = '';
