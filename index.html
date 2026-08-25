@@ -1319,7 +1319,12 @@
             let gradientSegments = [];
 
             const sortedEnvelopes = [...db.envelopes].sort((a, b) => {
-                return COLORS.indexOf(a.color || '#00b4d8') - COLORS.indexOf(b.color || '#00b4d8');
+                // On cherche l'ID (qui correspond au timestamp) le plus élevé dans l'historique
+                const lastActivityA = a.history && a.history.length > 0 ? Math.max(...a.history.map(h => h.id)) : a.id;
+                const lastActivityB = b.history && b.history.length > 0 ? Math.max(...b.history.map(h => h.id)) : b.id;
+                
+                // On trie du plus récent au plus ancien
+                return lastActivityB - lastActivityA;
             });
 
             sortedEnvelopes.forEach(e => {
